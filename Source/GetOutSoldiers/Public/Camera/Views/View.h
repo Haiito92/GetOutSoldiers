@@ -27,6 +27,7 @@ public:
 	FActivationStateChangedSignature ActivationStateChanged;
 
 	float GetWeight() const { return m_Weight; }
+	void SetWeight(float InWeight) { m_Weight = InWeight; }
 	
 private:
 	UPROPERTY()

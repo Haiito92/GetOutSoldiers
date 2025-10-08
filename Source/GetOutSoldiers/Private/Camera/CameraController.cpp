@@ -22,7 +22,7 @@ void UCameraController::Initialize(ACameraActor* InCamera, const TActorRange<AVi
 	}
 }
 
-void UCameraController::Tick(float DeltaTime)
+void UCameraController::Update(float DeltaTime)
 {
 	m_TargetConfiguration = ComputeAverageConfiguration();
 	LerpCurrentConfiguration(DeltaTime);

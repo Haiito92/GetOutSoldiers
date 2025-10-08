@@ -46,7 +46,7 @@ class GETOUTSOLDIERS_API UCameraController : public UObject
 
 public:
 	void Initialize(ACameraActor* InCamera, const TActorRange<AView>& InViews);
-	void Tick(float DeltaTime);
+	void Update(float DeltaTime);
 
 private:
 	UFUNCTION()

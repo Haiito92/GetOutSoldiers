@@ -3,15 +3,17 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "View.h"
-#include "FixedView.generated.h"
+#include "ViewVolume.h"
+#include "GlobalViewVolume.generated.h"
 
-UCLASS(Blueprintable)
-class GETOUTSOLDIERS_API AFixedView : public AView
+UCLASS()
+class GETOUTSOLDIERS_API AGlobalViewVolume : public AViewVolume
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this actor's properties
-	AFixedView();
+	AGlobalViewVolume();
+
+	virtual void Start() override;
 };
