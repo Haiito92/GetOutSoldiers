@@ -8,7 +8,7 @@
 
 class AView;
 
-UCLASS()
+UCLASS(Abstract)
 class GETOUTSOLDIERS_API AViewVolume : public AActor
 {
 	GENERATED_BODY()
@@ -37,6 +37,6 @@ private:
 	int m_Priority;
 	UPROPERTY()
 	bool m_IsActive;
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 	TObjectPtr<AView> View;
 };

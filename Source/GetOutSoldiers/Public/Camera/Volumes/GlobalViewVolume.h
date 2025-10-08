@@ -6,7 +6,7 @@
 #include "ViewVolume.h"
 #include "GlobalViewVolume.generated.h"
 
-UCLASS()
+UCLASS(Blueprintable)
 class GETOUTSOLDIERS_API AGlobalViewVolume : public AViewVolume
 {
 	GENERATED_BODY()

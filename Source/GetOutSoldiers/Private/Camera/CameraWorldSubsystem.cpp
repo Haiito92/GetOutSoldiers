@@ -14,8 +14,9 @@ void UCameraWorldSubsystem::InitializeCameraWorldSubsystem()
 	UWorld * World =  GetWorld();
 	
 	FActorSpawnParameters CameraSpawnParameters;
-	CameraSpawnParameters.Name = TEXT("MainCamera");
+	CameraSpawnParameters.Name = FName("MainCamera");
 	m_MainCamera = World->SpawnActor<ACameraActor>(ACameraActor::StaticClass(), CameraSpawnParameters);
+	World->GetFirstPlayerController()->SetViewTarget(m_MainCamera);
 
 	m_CameraController = NewObject<UCameraController>(this);
 	m_CameraController->Initialize(m_MainCamera, TActorRange<AView>(World));
