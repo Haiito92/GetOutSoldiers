@@ -4,7 +4,6 @@
 #include "Camera/CameraController.h"
 
 #include "Camera/CameraActor.h"
-#include "Camera/CameraComponent.h"
 #include "Camera/CameraSubsystemSettings.h"
 #include "Camera/Views/View.h"
 
@@ -16,12 +15,15 @@ void UCameraController::Initialize(ACameraActor* InCamera, const TActorRange<AVi
 
 	for (AView* View : InViews)
 	{
-		View->InitView();
-
 		View->ActivationStateChanged.AddDynamic(this, &UCameraController::OnViewActivationStateChanged);
-
-		View->StartView();
 	}
+}
+
+void UCameraController::Start()
+{
+	m_TargetConfiguration = ComputeAverageConfiguration();
+	m_CurrentConfiguration = m_TargetConfiguration;
+	ApplyCurrentConfiguration();
 }
 
 void UCameraController::Update(float DeltaTime)

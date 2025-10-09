@@ -18,6 +18,8 @@ class GETOUTSOLDIERS_API UCameraWorldSubsystem : public UTickableWorldSubsystem
 public:
 	UFUNCTION(BlueprintCallable, Category="Camera Subsystem")
 	void InitializeCameraWorldSubsystem();
+	UFUNCTION(BlueprintCallable, Category="Camera Subsystem")
+	void StartCameraWorldSubsystem();
 
 private:
 	virtual TStatId GetStatId() const override { return TStatId(); };

@@ -15,10 +15,13 @@ void UViewVolumeBlender::Initialize(const TActorRange<AViewVolume>& ViewVolumes)
 
 		ViewVolume->ActivationStateChanged.AddDynamic(this, &UViewVolumeBlender::OnVolumeActivationStateChanged);
 
-		ViewVolume->Start();
-
 		NextVolumeUId++;
 	}
+}
+
+void UViewVolumeBlender::Start() const
+{
+	
 }
 
 void UViewVolumeBlender::Update(float DeltaTime)

@@ -19,6 +19,7 @@ class GETOUTSOLDIERS_API UViewVolumeBlender : public UObject
 
 public:
 	void Initialize(const TActorRange<AViewVolume>& ViewVolumes) const;
+	void Start() const;
 	void Update(float DeltaTime);
 	
 private:

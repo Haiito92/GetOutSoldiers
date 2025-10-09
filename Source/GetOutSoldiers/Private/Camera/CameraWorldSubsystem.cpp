@@ -18,11 +18,41 @@ void UCameraWorldSubsystem::InitializeCameraWorldSubsystem()
 	m_MainCamera = World->SpawnActor<ACameraActor>(ACameraActor::StaticClass(), CameraSpawnParameters);
 	World->GetFirstPlayerController()->SetViewTarget(m_MainCamera);
 
+	TActorRange<AView> Views = TActorRange<AView>(World);
+	for (AView* View : Views)
+	{
+		View->InitView();
+	}
+	TActorRange<AViewVolume> Volumes = TActorRange<AViewVolume>(World);
+	int NextVolumeUId = 0;
+	for (AViewVolume* Volume : Volumes)
+	{
+		Volume->Initialize(NextVolumeUId);
+		NextVolumeUId++;
+	}
+	
 	m_CameraController = NewObject<UCameraController>(this);
-	m_CameraController->Initialize(m_MainCamera, TActorRange<AView>(World));
-
+	m_CameraController->Initialize(m_MainCamera, Views);
 	m_ViewVolumeBlender = NewObject<UViewVolumeBlender>(this);
-	m_ViewVolumeBlender->Initialize(TActorRange<AViewVolume>(World));
+	m_ViewVolumeBlender->Initialize(Volumes);
+}
+
+void UCameraWorldSubsystem::StartCameraWorldSubsystem()
+{
+	UWorld * World =  GetWorld();
+	TActorRange<AView> Views = TActorRange<AView>(World);
+	for (AView* View : Views)
+	{
+		View->StartView();
+	}
+	TActorRange<AViewVolume> Volumes = TActorRange<AViewVolume>(World);
+	for (AViewVolume* Volume : Volumes)
+	{
+		Volume->Start();
+	}
+
+	m_CameraController->Start();
+	m_ViewVolumeBlender->Start();
 }
 
 void UCameraWorldSubsystem::Tick(float DeltaTime)

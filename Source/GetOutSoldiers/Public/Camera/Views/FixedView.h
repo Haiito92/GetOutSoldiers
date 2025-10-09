@@ -14,6 +14,4 @@ class GETOUTSOLDIERS_API AFixedView : public AView
 public:
 	// Sets default values for this actor's properties
 	AFixedView();
-
-	virtual void StartView() override;
 };
