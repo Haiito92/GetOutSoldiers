@@ -24,7 +24,16 @@ ATriggerViewVolume::ATriggerViewVolume()
 void ATriggerViewVolume::OnColliderBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (OtherActor == m_Target)
+	if (m_TargetType == ETriggerViewVolumeTargetType::Actor && OtherActor == m_Target)
+	{
+		m_TargetCount ++;
+	}
+	else if (m_TargetType == ETriggerViewVolumeTargetType::Class && OtherActor->GetClass() == m_TargetClass)
+	{
+		m_TargetCount ++;
+	}
+
+	if (m_TargetCount == 1)
 	{
 		SetActive(true);
 	}
@@ -33,7 +42,16 @@ void ATriggerViewVolume::OnColliderBeginOverlap(UPrimitiveComponent* OverlappedC
 void ATriggerViewVolume::OnColliderEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	if (OtherActor == m_Target)
+	if (m_TargetType == ETriggerViewVolumeTargetType::Actor && OtherActor == m_Target)
+	{
+		m_TargetCount --;
+	}
+	else if (m_TargetType == ETriggerViewVolumeTargetType::Class && OtherActor->GetClass() == m_TargetClass)
+	{
+		m_TargetCount --;
+	}
+	
+	if (m_TargetCount == 0)
 	{
 		SetActive(false);
 	}

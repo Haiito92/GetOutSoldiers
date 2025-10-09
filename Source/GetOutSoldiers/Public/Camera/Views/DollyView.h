@@ -8,6 +8,14 @@
 
 class ARail;
 
+UENUM()
+enum class EDollyViewTargetType : uint8
+{
+	None = 0,
+	Actor = 1,
+	Class = 2
+};
+
 UCLASS(Blueprintable)
 class GETOUTSOLDIERS_API ADollyView : public AView
 {
@@ -17,11 +25,18 @@ public:
 	// Sets default values for this actor's properties
 	ADollyView();
 
+	virtual void StartView() override;
+	
 	virtual FCameraConfiguration GetConfiguration() const override;
 	
 private:
 	UPROPERTY(EditAnywhere, DisplayName="Rail")
 	TObjectPtr<ARail> m_Rail;
-	UPROPERTY(EditAnywhere, DisplayName="Target")
+
+	UPROPERTY(EditAnywhere, DisplayName="TargetType")
+	EDollyViewTargetType m_TargetType;
+	UPROPERTY(EditAnywhere, DisplayName="TargetActor")
 	TObjectPtr<AActor> m_Target;
+	UPROPERTY(EditAnywhere, DisplayName="TargetClass")
+	TSoftClassPtr<AActor> m_TargetClass;
 };
