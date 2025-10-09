@@ -38,5 +38,5 @@ private:
 	UPROPERTY(EditAnywhere, DisplayName="TargetActor")
 	TObjectPtr<AActor> m_Target;
 	UPROPERTY(EditAnywhere, DisplayName="TargetClass")
-	TSoftClassPtr<AActor> m_TargetClass;
+	TSubclassOf<AActor> m_TargetClass;
 };

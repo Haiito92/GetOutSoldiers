@@ -5,7 +5,6 @@
 
 #include "Camera/CameraController.h"
 #include "Camera/Rail/Rail.h"
-#include "GetOut/Car/ToyCarPawn.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
 
@@ -23,7 +22,7 @@ void ADollyView::StartView()
 
 	if (m_TargetType == EDollyViewTargetType::Class)
 	{
-		m_Target = UGameplayStatics::GetActorOfClass(GetWorld(), AToyCarPawn::StaticClass());
+		m_Target = UGameplayStatics::GetActorOfClass(GetWorld(), m_TargetClass);
 	}
 }
 

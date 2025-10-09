@@ -19,6 +19,6 @@ public:
 
 	FVector GetClosestRailLocation(const FVector& InWorldLocation) const;
 private:
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere, Category="Rail")
 	TObjectPtr<USplineComponent> m_Spline;
 };
