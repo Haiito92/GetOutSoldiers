@@ -1,0 +1,64 @@
+﻿// Fill out your copyright notice in the Description page of Project Settings.
+
+
+#include "Camera/CameraWorldSubsystem.h"
+
+#include "Camera/CameraActor.h"
+#include "Camera/CameraController.h"
+#include "Camera/ViewVolumeBlender.h"
+#include "Camera/Views/View.h"
+#include "Camera/Volumes/ViewVolume.h"
+
+void UCameraWorldSubsystem::InitializeCameraWorldSubsystem()
+{
+	UWorld * World =  GetWorld();
+	
+	FActorSpawnParameters CameraSpawnParameters;
+	CameraSpawnParameters.Name = FName("MainCamera");
+	m_MainCamera = World->SpawnActor<ACameraActor>(ACameraActor::StaticClass(), CameraSpawnParameters);
+	World->GetFirstPlayerController()->SetViewTarget(m_MainCamera);
+
+	TActorRange<AView> Views = TActorRange<AView>(World);
+	for (AView* View : Views)
+	{
+		View->InitView();
+	}
+	TActorRange<AViewVolume> Volumes = TActorRange<AViewVolume>(World);
+	int NextVolumeUId = 0;
+	for (AViewVolume* Volume : Volumes)
+	{
+		Volume->Initialize(NextVolumeUId);
+		NextVolumeUId++;
+	}
+	
+	m_CameraController = NewObject<UCameraController>(this);
+	m_CameraController->Initialize(m_MainCamera, Views);
+	m_ViewVolumeBlender = NewObject<UViewVolumeBlender>(this);
+	m_ViewVolumeBlender->Initialize(Volumes);
+}
+
+void UCameraWorldSubsystem::StartCameraWorldSubsystem()
+{
+	UWorld * World =  GetWorld();
+	TActorRange<AView> Views = TActorRange<AView>(World);
+	for (AView* View : Views)
+	{
+		View->StartView();
+	}
+	TActorRange<AViewVolume> Volumes = TActorRange<AViewVolume>(World);
+	for (AViewVolume* Volume : Volumes)
+	{
+		Volume->Start();
+	}
+
+	m_CameraController->Start();
+	m_ViewVolumeBlender->Start();
+}
+
+void UCameraWorldSubsystem::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	m_ViewVolumeBlender->Update(DeltaTime);
+	m_CameraController->Update(DeltaTime);
+}
