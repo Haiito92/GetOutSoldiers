@@ -5,6 +5,8 @@
 
 #include "Camera/CameraController.h"
 #include "Camera/Rail/Rail.h"
+#include "GetOut/Car/ToyCarPawn.h"
+#include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
 
 
@@ -13,6 +15,16 @@ ADollyView::ADollyView()
 {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
+}
+
+void ADollyView::StartView()
+{
+	Super::StartView();
+
+	if (m_TargetType == EDollyViewTargetType::Class)
+	{
+		m_Target = UGameplayStatics::GetActorOfClass(GetWorld(), AToyCarPawn::StaticClass());
+	}
 }
 
 FCameraConfiguration ADollyView::GetConfiguration() const
