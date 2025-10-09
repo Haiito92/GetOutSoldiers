@@ -8,6 +8,14 @@
 
 class UBoxComponent;
 
+UENUM()
+enum class ETriggerViewVolumeTargetType : uint8
+{
+	None = 0,
+	Actor = 1,
+	Class = 2
+};
+
 UCLASS(Blueprintable)
 class GETOUTSOLDIERS_API ATriggerViewVolume : public AViewVolume
 {
@@ -26,6 +34,15 @@ private:
 
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UBoxComponent> m_Collider;
-	UPROPERTY(EditAnywhere, DisplayName="Target")
+
+	UPROPERTY(EditAnywhere, DisplayName="TargetType")
+	ETriggerViewVolumeTargetType m_TargetType;
+	UPROPERTY(EditAnywhere, DisplayName="TargetActor")
 	TObjectPtr<AActor> m_Target;
+	UPROPERTY(EditAnywhere, DisplayName="TargetClass")
+	TSoftClassPtr<AActor> m_TargetClass;
+	
+	UPROPERTY()
+	unsigned int m_TargetCount = 0;
+	
 };
