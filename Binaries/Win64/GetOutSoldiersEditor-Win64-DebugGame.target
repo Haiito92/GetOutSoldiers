@@ -1,13 +1,13 @@
 {
 	"TargetName": "GetOutSoldiersEditor",
 	"Platform": "Win64",
-	"Configuration": "Development",
+	"Configuration": "DebugGame",
 	"TargetType": "Editor",
 	"IsTestTarget": false,
 	"Architecture": "x64",
 	"Project": "../../GetOutSoldiers.uproject",
-	"Launch": "$(EngineDir)/Binaries/Win64/UnrealEditor.exe",
-	"LaunchCmd": "$(EngineDir)/Binaries/Win64/UnrealEditor-Cmd.exe",
+	"Launch": "$(EngineDir)/Binaries/Win64/UnrealEditor-Win64-DebugGame.exe",
+	"LaunchCmd": "$(EngineDir)/Binaries/Win64/UnrealEditor-Win64-DebugGame-Cmd.exe",
 	"Version": 
 	{
 		"MajorVersion": 5,
@@ -727,14 +727,6 @@
 		},
 		{
 			"Path": "$(EngineDir)/Binaries/Win64/UnrealEditor-ClothingSystemRuntimeNv.pdb",
-			"Type": "SymbolFile"
-		},
-		{
-			"Path": "$(EngineDir)/Binaries/Win64/UnrealEditor-Cmd.exe",
-			"Type": "Executable"
-		},
-		{
-			"Path": "$(EngineDir)/Binaries/Win64/UnrealEditor-Cmd.pdb",
 			"Type": "SymbolFile"
 		},
 		{
@@ -3346,6 +3338,22 @@
 			"Type": "SymbolFile"
 		},
 		{
+			"Path": "$(EngineDir)/Binaries/Win64/UnrealEditor-Win64-DebugGame-Cmd.exe",
+			"Type": "Executable"
+		},
+		{
+			"Path": "$(EngineDir)/Binaries/Win64/UnrealEditor-Win64-DebugGame-Cmd.pdb",
+			"Type": "SymbolFile"
+		},
+		{
+			"Path": "$(EngineDir)/Binaries/Win64/UnrealEditor-Win64-DebugGame.exe",
+			"Type": "Executable"
+		},
+		{
+			"Path": "$(EngineDir)/Binaries/Win64/UnrealEditor-Win64-DebugGame.pdb",
+			"Type": "SymbolFile"
+		},
+		{
 			"Path": "$(EngineDir)/Binaries/Win64/UnrealEditor-WindowsPlatformEditor.dll",
 			"Type": "DynamicLibrary"
 		},
@@ -3410,16 +3418,8 @@
 			"Type": "SymbolFile"
 		},
 		{
-			"Path": "$(EngineDir)/Binaries/Win64/UnrealEditor.exe",
-			"Type": "Executable"
-		},
-		{
 			"Path": "$(EngineDir)/Binaries/Win64/UnrealEditor.modules",
 			"Type": "RequiredResource"
-		},
-		{
-			"Path": "$(EngineDir)/Binaries/Win64/UnrealEditor.pdb",
-			"Type": "SymbolFile"
 		},
 		{
 			"Path": "$(EngineDir)/Binaries/Win64/UnrealEditor.version",
@@ -6566,15 +6566,15 @@
 			"Type": "RequiredResource"
 		},
 		{
-			"Path": "$(ProjectDir)/Binaries/Win64/UnrealEditor-GetOutSoldiers.dll",
+			"Path": "$(ProjectDir)/Binaries/Win64/UnrealEditor-GetOutSoldiers-Win64-DebugGame.dll",
 			"Type": "DynamicLibrary"
 		},
 		{
-			"Path": "$(ProjectDir)/Binaries/Win64/UnrealEditor-GetOutSoldiers.pdb",
+			"Path": "$(ProjectDir)/Binaries/Win64/UnrealEditor-GetOutSoldiers-Win64-DebugGame.pdb",
 			"Type": "SymbolFile"
 		},
 		{
-			"Path": "$(ProjectDir)/Binaries/Win64/UnrealEditor.modules",
+			"Path": "$(ProjectDir)/Binaries/Win64/UnrealEditor-Win64-DebugGame.modules",
 			"Type": "RequiredResource"
 		}
 	],
