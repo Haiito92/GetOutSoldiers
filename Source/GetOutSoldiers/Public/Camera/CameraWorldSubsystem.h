@@ -20,11 +20,16 @@ public:
 	void InitializeCameraWorldSubsystem();
 	UFUNCTION(BlueprintCallable, Category="Camera Subsystem")
 	void StartCameraWorldSubsystem();
+	UFUNCTION(BlueprintCallable, Category="Camera Subsystem")
+	void UpdateCameraWorldSubsystem(float DeltaTime);
 
 private:
 	virtual TStatId GetStatId() const override { return TStatId(); };
 	virtual void Tick(float DeltaTime) override;
 
+	UPROPERTY()
+	bool m_IsInitialized = false;
+	
 	UPROPERTY()
 	TObjectPtr<ACameraActor> m_MainCamera;
 	
