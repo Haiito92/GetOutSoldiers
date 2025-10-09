@@ -6,11 +6,24 @@
 void AGetOutGameMode::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	InitializeGame();
 }
 
 void AGetOutGameMode::InitializeGame()
 {
+	// const UGetOutDeveloperSettings* GetOutDeveloperSettings = GetDefault<UGetOutDeveloperSettings>();
+	// UWorld* World = GetWorld();
+	// UGameInstance* GameInstance = GetGameInstance();
+	//
+	// //Create Players
+	// FString OutError;
+	// ULocalPlayer* PlayerZero = GameInstance->CreateLocalPlayer(0, OutError, true);
+	// ULocalPlayer* PlayerOne = GameInstance->CreateLocalPlayer(1, OutError, true);
+	//
+	// //SpawnPawns
+	
+	
 	ReceiveInitializeGame();
 }
 
