@@ -35,10 +35,14 @@ void UCameraWorldSubsystem::InitializeCameraWorldSubsystem()
 	m_CameraController->Initialize(m_MainCamera, Views);
 	m_ViewVolumeBlender = NewObject<UViewVolumeBlender>(this);
 	m_ViewVolumeBlender->Initialize(Volumes);
+
+	m_IsInitialized = true;
 }
 
 void UCameraWorldSubsystem::StartCameraWorldSubsystem()
 {
+	if (!m_IsInitialized) return;
+	
 	UWorld * World =  GetWorld();
 	TActorRange<AView> Views = TActorRange<AView>(World);
 	for (AView* View : Views)
@@ -55,10 +59,15 @@ void UCameraWorldSubsystem::StartCameraWorldSubsystem()
 	m_ViewVolumeBlender->Start();
 }
 
+void UCameraWorldSubsystem::UpdateCameraWorldSubsystem(float DeltaTime)
+{
+	if (!m_IsInitialized) return;
+	
+	m_ViewVolumeBlender->Update(DeltaTime);
+	m_CameraController->Update(DeltaTime);
+}
+
 void UCameraWorldSubsystem::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-	m_ViewVolumeBlender->Update(DeltaTime);
-	m_CameraController->Update(DeltaTime);
 }
