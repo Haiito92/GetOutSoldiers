@@ -28,15 +28,15 @@ public:
 	int GetUId() const {return m_UId; }
 	int GetPriority() const { return m_Priority; }
 	void SetActive(bool IsActive);
-	AView* GetView() const {return View; }
+	AView* GetView() const {return m_View; }
 	
 private:
 	UPROPERTY()
 	int m_UId;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, DisplayName="Priority")
 	int m_Priority;
 	UPROPERTY()
 	bool m_IsActive;
-	UPROPERTY(EditAnywhere)
-	TObjectPtr<AView> View;
+	UPROPERTY(EditAnywhere, DisplayName="View")
+	TObjectPtr<AView> m_View;
 };

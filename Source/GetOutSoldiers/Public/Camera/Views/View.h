@@ -18,6 +18,7 @@ public:
 	AView();
 
 	virtual void InitView();
+	virtual void StartView();
 	
 	virtual FCameraConfiguration GetConfiguration() const;
 
@@ -33,5 +34,5 @@ private:
 	UPROPERTY()
 	bool m_IsActive;
 	UPROPERTY()
-	float m_Weight;
+	float m_Weight = 1.0f;
 };

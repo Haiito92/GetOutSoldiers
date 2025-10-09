@@ -20,6 +20,11 @@ void AView::InitView()
 	
 }
 
+void AView::StartView()
+{
+	
+}
+
 FCameraConfiguration AView::GetConfiguration() const
 {
 	FCameraConfiguration CameraConfiguration = FCameraConfiguration();

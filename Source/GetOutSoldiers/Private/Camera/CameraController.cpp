@@ -19,6 +19,8 @@ void UCameraController::Initialize(ACameraActor* InCamera, const TActorRange<AVi
 		View->InitView();
 
 		View->ActivationStateChanged.AddDynamic(this, &UCameraController::OnViewActivationStateChanged);
+
+		View->StartView();
 	}
 }
 
@@ -72,8 +74,8 @@ FCameraConfiguration UCameraController::ComputeAverageConfiguration() const
 
 		YawVectorSum += FVector2f(FMath::Cos(FMath::DegreesToRadians(ViewConfiguration.Yaw)), FMath::Sin(FMath::DegreesToRadians(ViewConfiguration.Yaw))) * ViewWeight;
 
-		AverageConfiguration.Pivot += ViewConfiguration.Pivot;
-		AverageConfiguration.FoV += ViewConfiguration.FoV;
+		AverageConfiguration.Pivot += ViewConfiguration.Pivot * ViewWeight;
+		AverageConfiguration.FoV += ViewConfiguration.FoV * ViewWeight;
 		
 		WeightSum += ViewWeight;
 	}
@@ -108,11 +110,11 @@ void UCameraController::LerpCurrentConfiguration(float DeltaTime)
 	CurrentYawVector += (TargetYawVector - CurrentYawVector) * DeltaTime * CameraSpeed;
 	m_CurrentConfiguration.Yaw = FMath::RadiansToDegrees(FMath::Atan2(CurrentYawVector.Y, CurrentYawVector.X));
 
-	m_CurrentConfiguration.Pitch = (m_TargetConfiguration.Pitch - m_CurrentConfiguration.Pitch) * DeltaTime * CameraSpeed;
-	m_CurrentConfiguration.Roll = (m_TargetConfiguration.Roll - m_CurrentConfiguration.Roll) * DeltaTime * CameraSpeed;
+	m_CurrentConfiguration.Pitch += (m_TargetConfiguration.Pitch - m_CurrentConfiguration.Pitch) * DeltaTime * CameraSpeed;
+	m_CurrentConfiguration.Roll += (m_TargetConfiguration.Roll - m_CurrentConfiguration.Roll) * DeltaTime * CameraSpeed;
 	
-	m_CurrentConfiguration.Pivot = (m_TargetConfiguration.Pivot - m_CurrentConfiguration.Pivot) * DeltaTime * CameraSpeed;
-	m_CurrentConfiguration.FoV = (m_TargetConfiguration.FoV - m_CurrentConfiguration.FoV) * DeltaTime * CameraSpeed;
+	m_CurrentConfiguration.Pivot += (m_TargetConfiguration.Pivot - m_CurrentConfiguration.Pivot) * DeltaTime * CameraSpeed;
+	m_CurrentConfiguration.FoV += (m_TargetConfiguration.FoV - m_CurrentConfiguration.FoV) * DeltaTime * CameraSpeed;
 }
 
 void UCameraController::ApplyCurrentConfiguration() const

@@ -20,8 +20,8 @@ public:
 	virtual FCameraConfiguration GetConfiguration() const override;
 	
 private:
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, DisplayName="Rail")
 	TObjectPtr<ARail> m_Rail;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, DisplayName="Target")
 	TObjectPtr<AActor> m_Target;
 };

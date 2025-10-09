@@ -11,3 +11,10 @@ AFixedView::AFixedView()
 	PrimaryActorTick.bCanEverTick = false;
 }
 
+void AFixedView::StartView()
+{
+	Super::StartView();
+
+	// SetActive(true);
+}
+
