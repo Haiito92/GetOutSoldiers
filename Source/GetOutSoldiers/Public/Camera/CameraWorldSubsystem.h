@@ -17,7 +17,7 @@ class GETOUTSOLDIERS_API UCameraWorldSubsystem : public UTickableWorldSubsystem
 	GENERATED_BODY()
 public:
 	UFUNCTION(BlueprintCallable, Category="Camera Subsystem")
-	void InitializeCameraWorldSubsystem();
+	void InitializeCameraWorldSubsystem(APlayerController* UsedPlayerController);
 	UFUNCTION(BlueprintCallable, Category="Camera Subsystem")
 	void StartCameraWorldSubsystem();
 	UFUNCTION(BlueprintCallable, Category="Camera Subsystem")

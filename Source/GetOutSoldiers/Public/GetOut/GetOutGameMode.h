@@ -52,4 +52,7 @@ protected:
 	void ReceiveLeaveGame();
 	UFUNCTION(BlueprintCallable, Category="Gameloop")
 	void LeaveGame();
+
+private:
+	void CreateLocalPlayers() const;
 };
