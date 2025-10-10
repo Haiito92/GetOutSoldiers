@@ -12,17 +12,7 @@ void AGetOutGameMode::BeginPlay()
 
 void AGetOutGameMode::InitializeGame()
 {
-	// const UGetOutDeveloperSettings* GetOutDeveloperSettings = GetDefault<UGetOutDeveloperSettings>();
-	// UWorld* World = GetWorld();
-	// UGameInstance* GameInstance = GetGameInstance();
-	//
-	// //Create Players
-	// FString OutError;
-	// ULocalPlayer* PlayerZero = GameInstance->CreateLocalPlayer(0, OutError, true);
-	// ULocalPlayer* PlayerOne = GameInstance->CreateLocalPlayer(1, OutError, true);
-	//
-	// //SpawnPawns
-	
+	CreateLocalPlayers();
 	
 	ReceiveInitializeGame();
 }
@@ -55,4 +45,12 @@ void AGetOutGameMode::RestartGame()
 void AGetOutGameMode::LeaveGame()
 {
 	ReceiveLeaveGame();
+}
+
+void AGetOutGameMode::CreateLocalPlayers() const
+{
+	UGameInstance* GameInstance = GetWorld()->GetGameInstance();
+
+	FString OutError;
+	GameInstance->CreateLocalPlayer(1, OutError, true);
 }

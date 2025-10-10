@@ -9,14 +9,15 @@
 #include "Camera/Views/View.h"
 #include "Camera/Volumes/ViewVolume.h"
 
-void UCameraWorldSubsystem::InitializeCameraWorldSubsystem()
+void UCameraWorldSubsystem::InitializeCameraWorldSubsystem(APlayerController* UsedPlayerController)
 {
+	if (UsedPlayerController == nullptr) return;
 	UWorld * World =  GetWorld();
 	
 	FActorSpawnParameters CameraSpawnParameters;
 	CameraSpawnParameters.Name = FName("MainCamera");
 	m_MainCamera = World->SpawnActor<ACameraActor>(ACameraActor::StaticClass(), CameraSpawnParameters);
-	World->GetFirstPlayerController()->SetViewTarget(m_MainCamera);
+	UsedPlayerController->SetViewTarget(m_MainCamera);
 
 	TActorRange<AView> Views = TActorRange<AView>(World);
 	for (AView* View : Views)
