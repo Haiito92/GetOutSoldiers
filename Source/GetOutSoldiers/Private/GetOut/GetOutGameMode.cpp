@@ -74,6 +74,7 @@ void AGetOutGameMode::CreateLocalPlayers()
 	ULocalPlayer* PlayerNounours = GameInstance->CreateLocalPlayer(1, OutError, false);
 	m_NounoursPlayerController = GetWorld()->SpawnActor<ANoInputPlayerController>();
 	PlayerNounours->PlayerController = m_NounoursPlayerController;
+	m_NounoursPlayerController->Player = PlayerNounours;
 }
 
 void AGetOutGameMode::CreatePawns()
