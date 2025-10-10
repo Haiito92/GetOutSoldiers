@@ -28,6 +28,8 @@ void ADollyView::StartView()
 
 FCameraConfiguration ADollyView::GetConfiguration() const
 {
+	if (m_Target == nullptr || m_Rail == nullptr) return FCameraConfiguration();
+	
 	FCameraConfiguration CameraConfiguration = FCameraConfiguration();
 	CameraConfiguration.SetLocation(m_Rail->GetClosestRailLocation(m_Target->GetActorLocation()));
 	CameraConfiguration.SetRotation(UKismetMathLibrary::FindLookAtRotation(CameraConfiguration.GetLocation(), m_Target->GetActorLocation()));

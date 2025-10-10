@@ -24,36 +24,50 @@ ATriggerViewVolume::ATriggerViewVolume()
 void ATriggerViewVolume::OnColliderBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (m_TargetType == ETriggerViewVolumeTargetType::Actor && OtherActor == m_Target)
+	
+	if (m_TargetType == ETriggerViewVolumeTargetType::Actor && m_Target != nullptr && OtherActor == m_Target)
 	{
 		m_TargetCount ++;
+
+		
+
+		if (m_TargetCount == 1)
+		{
+			SetActive(true);
+		}
 	}
 	else if (m_TargetType == ETriggerViewVolumeTargetType::Class && OtherActor->GetClass() == m_TargetClass)
 	{
 		m_TargetCount ++;
-	}
 
-	if (m_TargetCount == 1)
-	{
-		SetActive(true);
+		
+		if (m_TargetCount == 1)
+		{
+			SetActive(true);
+		}
 	}
 }
 
 void ATriggerViewVolume::OnColliderEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	if (m_TargetType == ETriggerViewVolumeTargetType::Actor && OtherActor == m_Target)
+	if (m_TargetType == ETriggerViewVolumeTargetType::Actor && m_Target != nullptr && OtherActor == m_Target)
 	{
 		m_TargetCount --;
+
+		if (m_TargetCount == 0)
+		{
+			SetActive(false);
+		}
 	}
 	else if (m_TargetType == ETriggerViewVolumeTargetType::Class && OtherActor->GetClass() == m_TargetClass)
 	{
 		m_TargetCount --;
-	}
-	
-	if (m_TargetCount == 0)
-	{
-		SetActive(false);
+		
+		if (m_TargetCount == 0)
+		{
+			SetActive(false);
+		}
 	}
 }
 

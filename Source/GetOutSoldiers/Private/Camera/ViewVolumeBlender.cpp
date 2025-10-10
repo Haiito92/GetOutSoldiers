@@ -70,10 +70,12 @@ void UViewVolumeBlender::OnVolumeActivationStateChanged(AViewVolume* InVolume, b
 
 void UViewVolumeBlender::AddActiveVolume(AViewVolume* InVolume)
 {
+	AView* View = InVolume->GetView();
+	if (View == nullptr) return;
+	
 	if (m_ActiveViewVolumes.Contains(InVolume)) return;
 	m_ActiveViewVolumes.Add(InVolume);
 
-	AView* View = InVolume->GetView();
 	if (!m_VolumesPerView.Contains(View))
 	{
 		View->SetActive(true);
@@ -93,6 +95,7 @@ void UViewVolumeBlender::RemoveActiveVolume(AViewVolume* InVolume)
 	m_ActiveViewVolumes.Remove(InVolume);
 	
 	AView* View = InVolume->GetView();
+	if (View == nullptr) return;
 
 	if (!m_VolumesPerView.Contains(View)) return;
 
