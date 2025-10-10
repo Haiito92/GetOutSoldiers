@@ -6,6 +6,9 @@
 #include "GameFramework/GameModeBase.h"
 #include "GetOutGameMode.generated.h"
 
+class AGetOutHUD;
+class ANoInputPlayerController;
+class AGetOutPlayerController;
 /**
  * 
  */
@@ -53,6 +56,21 @@ protected:
 	UFUNCTION(BlueprintCallable, Category="Gameloop")
 	void LeaveGame();
 
+	
 private:
-	void CreateLocalPlayers() const;
+	void CreateLocalPlayers();
+	void CreatePawns();
+	void CreateHUD();
+
+protected:
+	UPROPERTY(BlueprintReadWrite, Category="Players|PlayerControllers", DisplayName="DriverPlayerController")
+	TObjectPtr<AGetOutPlayerController> m_DriverPlayerController;
+	UPROPERTY(BlueprintReadWrite, Category="Players|PlayerControllers", DisplayName="NounoursPlayerController")
+	TObjectPtr<ANoInputPlayerController> m_NounoursPlayerController;
+
+	UPROPERTY(BlueprintReadWrite, Category="Players|Pawns", DisplayName="DriverPawn")
+	TObjectPtr<APawn> m_DriverPawn;
+	
+	UPROPERTY(BlueprintReadWrite, Category="HUD", DisplayName="GetOutHUD")
+	TObjectPtr<AGetOutHUD> m_GetOutHUD;
 };
