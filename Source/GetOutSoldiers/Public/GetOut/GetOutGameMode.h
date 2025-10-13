@@ -4,27 +4,22 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
+#include "GoS/GoSGameMode.h"
 #include "GetOutGameMode.generated.h"
 
 class AGetOutHUD;
-class ANoInputPlayerController;
-class AGetOutPlayerController;
+
 /**
  * 
  */
 UCLASS()
-class GETOUTSOLDIERS_API AGetOutGameMode : public AGameModeBase
+class GETOUTSOLDIERS_API AGetOutGameMode : public AGoSGameMode
 {
 	GENERATED_BODY()
 
 	
 protected:
-	virtual void BeginPlay() override;
 	
-	UFUNCTION(BlueprintImplementableEvent, Category="Gameloop")
-	void ReceiveInitializeGame();
-	UFUNCTION(BlueprintCallable, Category="Gameloop")
-	void InitializeGame();
 	
 	UFUNCTION(BlueprintImplementableEvent, Category="Gameloop")
 	void ReceiveStartGame();
@@ -58,19 +53,10 @@ protected:
 
 	
 private:
-	void CreateLocalPlayers();
-	void CreatePawns();
-	void CreateHUD();
-
+	virtual void FindGameModeSettings() override;
+	virtual void CreatePawns() override;
+	
 protected:
-	UPROPERTY(BlueprintReadWrite, Category="Players|PlayerControllers", DisplayName="DriverPlayerController")
-	TObjectPtr<AGetOutPlayerController> m_DriverPlayerController;
-	UPROPERTY(BlueprintReadWrite, Category="Players|PlayerControllers", DisplayName="NounoursPlayerController")
-	TObjectPtr<ANoInputPlayerController> m_NounoursPlayerController;
-
 	UPROPERTY(BlueprintReadWrite, Category="Players|Pawns", DisplayName="DriverPawn")
 	TObjectPtr<APawn> m_DriverPawn;
-	
-	UPROPERTY(BlueprintReadWrite, Category="HUD", DisplayName="GetOutHUD")
-	TObjectPtr<AGetOutHUD> m_GetOutHUD;
 };

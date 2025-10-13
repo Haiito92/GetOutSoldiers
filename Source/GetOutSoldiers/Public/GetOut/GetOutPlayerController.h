@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
+#include "GoS/GoSPlayerController.h"
 #include "GetOutPlayerController.generated.h"
 
 /**
@@ -22,7 +23,7 @@ enum EMenuAction
 };
 
 UCLASS()
-class GETOUTSOLDIERS_API AGetOutPlayerController : public APlayerController
+class GETOUTSOLDIERS_API AGetOutPlayerController : public AGoSPlayerController
 {
 	GENERATED_BODY()
 

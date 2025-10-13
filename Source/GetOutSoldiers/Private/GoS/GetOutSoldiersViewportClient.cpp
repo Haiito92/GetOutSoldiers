@@ -2,11 +2,20 @@
 
 
 #include "GoS/GetOutSoldiersViewportClient.h"
+#include "GameFramework/GameUserSettings.h"
+#include "GoS/GetOutSoldiersViewportSettings.h"
 
 
-void UGetOutSoldiersViewportClient::Init(struct FWorldContext& WorldContext, UGameInstance* OwningGameInstance,
-                                         bool bCreateNewAudioDevice)
+void UGetOutSoldiersViewportClient::Draw(FViewport* InViewport, FCanvas* InCanvas)
 {
-	Super::Init(WorldContext, OwningGameInstance, bCreateNewAudioDevice);
+	Super::Draw(InViewport, InCanvas);
 
+	if (m_IsInitialized) return;
+	
+	const UGetOutSoldiersViewportSettings* Settings = GetDefault<UGetOutSoldiersViewportSettings>();
+
+	if (!Settings->UseCustomSize) return;
+	
+	GetWindow()->ReshapeWindow( Settings->WindowPosition, Settings->WindowSize);
+	m_IsInitialized = true;
 }

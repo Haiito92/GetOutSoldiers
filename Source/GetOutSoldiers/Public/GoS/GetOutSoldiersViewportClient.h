@@ -14,5 +14,9 @@ class GETOUTSOLDIERS_API UGetOutSoldiersViewportClient : public UGameViewportCli
 {
 	GENERATED_BODY()
 
-	virtual void Init(struct FWorldContext& WorldContext, UGameInstance* OwningGameInstance, bool bCreateNewAudioDevice = true) override;
+private:
+	virtual void Draw(FViewport* InViewport, FCanvas* InCanvas) override;
+
+	UPROPERTY()
+	bool m_IsInitialized = false;
 };
