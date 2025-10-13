@@ -4,6 +4,7 @@
 #include "Camera/CameraWorldSubsystem.h"
 
 #include "Camera/CameraActor.h"
+#include "Camera/CameraComponent.h"
 #include "Camera/CameraController.h"
 #include "Camera/ViewVolumeBlender.h"
 #include "Camera/Views/View.h"
@@ -17,6 +18,7 @@ void UCameraWorldSubsystem::InitializeCameraWorldSubsystem(APlayerController* Us
 	FActorSpawnParameters CameraSpawnParameters;
 	CameraSpawnParameters.Name = FName("MainCamera");
 	m_MainCamera = World->SpawnActor<ACameraActor>(ACameraActor::StaticClass(), CameraSpawnParameters);
+	m_MainCamera->GetCameraComponent()->bConstrainAspectRatio = false;
 	UsedPlayerController->SetViewTarget(m_MainCamera);
 
 	TActorRange<AView> Views = TActorRange<AView>(World);
