@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/HUD.h"
+#include "GoS/GoSHUD.h"
 #include "GetOutHUD.generated.h"
 
 class UInteractableUserWidget;
@@ -13,13 +14,13 @@ class AGetOutPlayerController;
  * 
  */
 UCLASS()
-class GETOUTSOLDIERS_API AGetOutHUD : public AHUD
+class GETOUTSOLDIERS_API AGetOutHUD : public AGoSHUD
 {
 	GENERATED_BODY()
 
 public:
 	//Cpp function of InitHUD;
-	void InitHUD();
+	virtual void InitHUD() override;
 
 	UFUNCTION()
 	//Distribute Input to BP Class and Current Active Menu Widget
