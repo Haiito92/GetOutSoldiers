@@ -133,4 +133,5 @@ void AGetOutGameMode::CreateHUD()
 	}
 	m_DriverPlayerController->MyHUD = m_GetOutHUD;
 	m_GetOutHUD->PlayerOwner = m_DriverPlayerController;
+	m_GetOutHUD->InitHUD();
 }

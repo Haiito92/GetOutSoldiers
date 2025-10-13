@@ -2,3 +2,26 @@
 
 
 #include "GetOut/GetOutHUD.h"
+
+#include "GetOut/GetOutPlayerController.h"
+#include "UI/InteractableUserWidget.h"
+
+void AGetOutHUD::InitHUD()
+{
+	if (AGetOutPlayerController* GetOutPlayerController = Cast<AGetOutPlayerController>(PlayerOwner))
+	{
+		GetOutPlayerController->OnMenuInputActionPressed.AddDynamic(this, &AGetOutHUD::OnMenuInputActionPressed);
+	}
+}
+
+void AGetOutHUD::OnMenuInputActionPressed(EMenuAction MenuAction)
+{
+	//Call BP Event
+	ReceiveOnMenuInputActionPressed(MenuAction);
+
+	//Pass Action to CurrentInteractionWidget;
+	if (CurrentInteractionWidget != nullptr)
+	{
+		CurrentInteractionWidget->HandleMenuAction(MenuAction);
+	}	
+}
