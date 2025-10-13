@@ -2,11 +2,16 @@
 
 
 #include "GoS/GetOutSoldiersViewportClient.h"
+#include "GameFramework/GameUserSettings.h"
 
 
-void UGetOutSoldiersViewportClient::Init(struct FWorldContext& WorldContext, UGameInstance* OwningGameInstance,
-                                         bool bCreateNewAudioDevice)
+void UGetOutSoldiersViewportClient::Draw(FViewport* InViewport, FCanvas* InCanvas)
 {
-	Super::Init(WorldContext, OwningGameInstance, bCreateNewAudioDevice);
+	Super::Draw(InViewport, InCanvas);
 
+	if (!m_IsInitialized)
+	{
+		GetWindow()->ReshapeWindow(FVector2D(0,30),FVector2D(3840,1000));
+		m_IsInitialized = true;
+	}
 }
