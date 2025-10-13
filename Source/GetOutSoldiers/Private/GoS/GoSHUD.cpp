@@ -3,7 +3,7 @@
 
 #include "GoS/GoSHUD.h"
 
-void AGoSHUD::InitHUD()
+void AGoSHUD::InitHUD(AGoSPlayerController* InDriverPlayerController, ANoInputPlayerController* InNoInputPlayerController)
 {
-	
+	ReceiveInitHUD(InDriverPlayerController, InNoInputPlayerController);
 }

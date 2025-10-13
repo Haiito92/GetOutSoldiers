@@ -92,5 +92,5 @@ void AGoSGameMode::CreateHUD()
 	}
 	m_DriverPlayerController->MyHUD = m_GoSHUD;
 	m_GoSHUD->PlayerOwner = m_DriverPlayerController;
-	m_GoSHUD->InitHUD();
+	m_GoSHUD->InitHUD(m_DriverPlayerController, m_NounoursPlayerController);
 }

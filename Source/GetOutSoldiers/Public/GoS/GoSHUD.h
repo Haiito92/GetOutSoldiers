@@ -14,6 +14,8 @@ class GETOUTSOLDIERS_API AGoSHUD : public AHUD
 {
 	GENERATED_BODY()
 public:
+	UFUNCTION(BlueprintImplementableEvent, Category="Initialization")
+	void ReceiveInitHUD(AGoSPlayerController* InDriverPlayerController, ANoInputPlayerController* InNoInputPlayerController);
 	//Cpp function of InitHUD;
-	virtual void InitHUD();
+	virtual void InitHUD(AGoSPlayerController* InDriverPlayerController, ANoInputPlayerController* InNoInputPlayerController);
 };

@@ -42,6 +42,6 @@ protected:
 	UPROPERTY(BlueprintReadWrite, Category="Players|PlayerControllers", DisplayName="NounoursPlayerController")
 	TObjectPtr<ANoInputPlayerController> m_NounoursPlayerController;
 	
-	UPROPERTY(BlueprintReadWrite, Category="HUD", DisplayName="GetOutHUD")
+	UPROPERTY(BlueprintReadWrite, Category="HUD", DisplayName="GoSHUD")
 	TObjectPtr<AGoSHUD> m_GoSHUD;
 };

@@ -6,12 +6,14 @@
 #include "GetOut/GetOutPlayerController.h"
 #include "UI/InteractableUserWidget.h"
 
-void AGetOutHUD::InitHUD()
+void AGetOutHUD::InitHUD(AGoSPlayerController* InDriverPlayerController, ANoInputPlayerController* InNoInputPlayerController)
 {
 	if (AGetOutPlayerController* GetOutPlayerController = Cast<AGetOutPlayerController>(PlayerOwner))
 	{
 		GetOutPlayerController->OnMenuInputActionPressed.AddDynamic(this, &AGetOutHUD::OnMenuInputActionPressed);
 	}
+
+	Super::InitHUD(InDriverPlayerController, InNoInputPlayerController);
 }
 
 void AGetOutHUD::OnMenuInputActionPressed(EMenuAction MenuAction)

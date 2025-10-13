@@ -20,7 +20,7 @@ class GETOUTSOLDIERS_API AGetOutHUD : public AGoSHUD
 
 public:
 	//Cpp function of InitHUD;
-	virtual void InitHUD() override;
+	virtual void InitHUD(AGoSPlayerController* InDriverPlayerController, ANoInputPlayerController* InNoInputPlayerController) override;
 
 	UFUNCTION()
 	//Distribute Input to BP Class and Current Active Menu Widget
