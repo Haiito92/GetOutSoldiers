@@ -32,6 +32,8 @@ private:
 	
 	UPROPERTY()
 	TObjectPtr<ACameraActor> m_MainCamera;
+	UPROPERTY()
+	TObjectPtr<APlayerController> m_TargetPlayerController;
 	
 	UPROPERTY()
 	TObjectPtr<UCameraController> m_CameraController;
