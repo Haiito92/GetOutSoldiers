@@ -3,10 +3,12 @@
 
 #include "Audio/AudioWorldSubsystem.h"
 
+#include "MathUtil.h"
 #include "Audio/AudioSubsystemSettings.h"
-#include "Kismet/GameplayStatics.h"
 #include "Sound/SoundMix.h"
 #include "Sound/SoundClass.h"
+#include "Audio/VolumeType.h"
+#include "Kismet/GameplayStatics.h"
 
 void UAudioWorldSubsystem::InitializeAudioSubsystem()
 {
@@ -23,10 +25,15 @@ void UAudioWorldSubsystem::InitializeAudioSubsystem()
 	
 	m_MainSoundMix = MainSoundMix;
 
-	m_MasterVolume = 1.0f;
-	m_MusicVolume = 1.0f;
-	m_SFXVolume = 1.0f;
-	m_VoicesVolume = 1.0f;
+	for (TPair<EVolumeType, TSoftObjectPtr<USoundClass>> VolumeSoundClassPair : Settings->SoundClasses)
+	{
+		USoundClass* SoundClass = VolumeSoundClassPair.Value.LoadSynchronous();
+		
+		if (SoundClass == nullptr) continue;
+		
+		m_SoundClasses.Add(VolumeSoundClassPair.Key, SoundClass);
+		m_Volumes.Add(VolumeSoundClassPair.Key, 1.0f);
+	}
 }
 
 void UAudioWorldSubsystem::StartAudioSubsystem() const
@@ -34,5 +41,42 @@ void UAudioWorldSubsystem::StartAudioSubsystem() const
 	if (m_MainSoundMix == nullptr) return;
 	UWorld* World = GetWorld();
 
+	UGameplayStatics::PushSoundMixModifier(World, m_MainSoundMix);
+
+	for (TPair<EVolumeType, TObjectPtr<USoundClass>> Pair : m_SoundClasses)
+	{
+		float Volume = GetVolume(Pair.Key);
+		if (Volume == -1.0f) continue;
+		
+		UGameplayStatics::SetSoundMixClassOverride(World, m_MainSoundMix, Pair.Value, Volume);
+	}
+}
+
+float UAudioWorldSubsystem::GetVolume(EVolumeType VolumeType) const
+{
+	if (!m_Volumes.Contains(VolumeType)) return -1.0f;
 	
+	return m_Volumes[VolumeType];
+}
+
+void UAudioWorldSubsystem::SetVolume(EVolumeType VolumeType, float Value)
+{
+	if (!m_Volumes.Contains(VolumeType)) return;
+
+	float ClampedValue = FMathf::Clamp(Value, 0.0f, 1.0f);
+	m_Volumes[VolumeType] = ClampedValue;
+
+	if (m_MainSoundMix == nullptr) return;
+	
+	USoundClass* SoundClass = GetSoundClass(VolumeType);
+	if (SoundClass == nullptr) return;
+
+	UGameplayStatics::SetSoundMixClassOverride(GetWorld(), m_MainSoundMix, SoundClass, ClampedValue);
+}
+
+USoundClass* UAudioWorldSubsystem::GetSoundClass(EVolumeType VolumeType) const
+{
+	if (!m_SoundClasses.Contains(VolumeType)) return nullptr;
+
+	return m_SoundClasses[VolumeType];
 }

@@ -6,6 +6,7 @@
 #include "Engine/DeveloperSettings.h"
 #include "AudioSubsystemSettings.generated.h"
 
+enum class EVolumeType : uint8;
 class USoundMix;
 /**
  * 
@@ -18,4 +19,7 @@ class GETOUTSOLDIERS_API UAudioSubsystemSettings : public UDeveloperSettings
 public:
 	UPROPERTY(Config, EditAnywhere, Category="Sound Mix")
 	TSoftObjectPtr<USoundMix> MainSoundMix;
+
+	UPROPERTY(Config, EditAnywhere, Category="Sound Classes")
+	TMap<EVolumeType, TSoftObjectPtr<USoundClass>> SoundClasses;
 };

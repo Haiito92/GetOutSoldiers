@@ -19,18 +19,18 @@ void AGoSGameMode::BeginPlay()
 
 void AGoSGameMode::InitializeGame()
 {
-	FindGameModeSettings();
-	
-	CreateLocalPlayers();
-	CreatePawns();
-	CreateHUD();
-
 	UAudioWorldSubsystem* AudioWorldSubsystem =GetWorld()->GetSubsystem<UAudioWorldSubsystem>();
 	if (AudioWorldSubsystem != nullptr)
 	{
 		AudioWorldSubsystem->InitializeAudioSubsystem();
 		AudioWorldSubsystem->StartAudioSubsystem();
 	}
+	
+	FindGameModeSettings();
+	
+	CreateLocalPlayers();
+	CreatePawns();
+	CreateHUD();
 	
 	ReceiveInitializeGame();
 }

@@ -6,6 +6,7 @@
 #include "Subsystems/GameInstanceSubsystem.h"
 #include "AudioWorldSubsystem.generated.h"
 
+enum class EVolumeType : uint8;
 class USoundMix;
 class USoundClass;
 /**
@@ -20,17 +21,20 @@ public:
 	void InitializeAudioSubsystem();
 	void StartAudioSubsystem() const;
 
+	UFUNCTION(BlueprintCallable)
+	float GetVolume(EVolumeType VolumeType) const;
+	UFUNCTION(BlueprintCallable)
+	void SetVolume(EVolumeType VolumeType, float Value);
+	
+	UFUNCTION(BlueprintCallable)
+	USoundClass* GetSoundClass(EVolumeType VolumeType) const;
+	
 
 private:
 	UPROPERTY()
 	TObjectPtr<USoundMix> m_MainSoundMix;
-
 	UPROPERTY()
-	float m_MasterVolume;
+	TMap<EVolumeType, TObjectPtr<USoundClass>> m_SoundClasses;
 	UPROPERTY()
-	float m_MusicVolume;
-	UPROPERTY()
-	float m_SFXVolume;
-	UPROPERTY()
-	float m_VoicesVolume;
+	TMap<EVolumeType, float> m_Volumes;
 };
