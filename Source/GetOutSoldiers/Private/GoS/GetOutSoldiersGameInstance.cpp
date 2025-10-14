@@ -2,6 +2,8 @@
 
 
 #include "GoS/GetOutSoldiersGameInstance.h"
+
+#include "Audio/AudioWorldSubsystem.h"
 #include "GameFramework/GameUserSettings.h"
 
 void UGetOutSoldiersGameInstance::Init()
@@ -14,6 +16,11 @@ void UGetOutSoldiersGameInstance::Init()
 	{
 		Settings->SetFullscreenMode(EWindowMode::Windowed);
 		Settings->ApplySettings(true);
-	
 	}
+
+}
+
+void UGetOutSoldiersGameInstance::OnStart()
+{
+	Super::OnStart();
 }

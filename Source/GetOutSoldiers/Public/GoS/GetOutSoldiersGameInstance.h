@@ -15,4 +15,5 @@ class GETOUTSOLDIERS_API UGetOutSoldiersGameInstance : public UGameInstance
 	GENERATED_BODY()
 
 	virtual void Init() override;
+	virtual void OnStart() override;
 };
