@@ -6,6 +6,8 @@
 #include "GameFramework/HUD.h"
 #include "GoSHUD.generated.h"
 
+enum EMenuAction : int;
+class UInteractableUserWidget;
 /**
  * 
  */
@@ -18,4 +20,15 @@ public:
 	void ReceiveInitHUD(AGoSPlayerController* InDriverPlayerController, ANoInputPlayerController* InNoInputPlayerController);
 	//Cpp function of InitHUD;
 	virtual void InitHUD(AGoSPlayerController* InDriverPlayerController, ANoInputPlayerController* InNoInputPlayerController);
+
+	UFUNCTION()
+	//Distribute Input to BP Class and Current Active Menu Widget
+	void OnMenuInputActionPressed(EMenuAction MenuAction);
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ReceiveOnMenuInputActionPressed(EMenuAction MenuAction);
+	
+	UPROPERTY(BlueprintReadWrite)
+	TObjectPtr<UInteractableUserWidget> CurrentInteractionWidget;
 };
