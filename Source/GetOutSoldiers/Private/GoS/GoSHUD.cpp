@@ -25,5 +25,5 @@ void AGoSHUD::OnMenuInputActionPressed(EMenuAction MenuAction)
 	if (CurrentInteractionWidget != nullptr)
 	{
 		CurrentInteractionWidget->HandleMenuAction(MenuAction);
-	}	
+	}
 }
