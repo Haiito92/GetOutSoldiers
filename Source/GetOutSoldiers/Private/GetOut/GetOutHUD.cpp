@@ -8,10 +8,5 @@
 
 void AGetOutHUD::InitHUD(AGoSPlayerController* InDriverPlayerController, ANoInputPlayerController* InNoInputPlayerController)
 {
-	if (AGetOutPlayerController* GetOutPlayerController = Cast<AGetOutPlayerController>(PlayerOwner))
-	{
-		GetOutPlayerController->OnMenuInputActionPressed.AddDynamic(this, &AGetOutHUD::OnMenuInputActionPressed);
-	}
-
 	Super::InitHUD(InDriverPlayerController, InNoInputPlayerController);
 }

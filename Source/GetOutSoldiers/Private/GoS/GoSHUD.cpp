@@ -10,7 +10,10 @@ void AGoSHUD::InitHUD(AGoSPlayerController* InDriverPlayerController, ANoInputPl
 {
 	ReceiveInitHUD(InDriverPlayerController, InNoInputPlayerController);
 
-	InDriverPlayerController->OnMenuInputActionPressed.AddDynamic(this, &AGoSHUD::OnMenuInputActionPressed);
+	if (InDriverPlayerController != nullptr)
+	{
+		InDriverPlayerController->OnMenuInputActionPressed.AddDynamic(this, &AGoSHUD::OnMenuInputActionPressed);
+	}
 }
 
 void AGoSHUD::OnMenuInputActionPressed(EMenuAction MenuAction)
