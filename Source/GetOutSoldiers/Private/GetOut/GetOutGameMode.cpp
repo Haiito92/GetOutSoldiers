@@ -5,9 +5,7 @@
 
 #include "GameFramework/PlayerStart.h"
 #include "GetOut/GetOutGameModeSettings.h"
-#include "GetOut/GetOutHUD.h"
 #include "GetOut/GetOutPlayerController.h"
-#include "GetOut/NoInputPlayerController.h"
 #include "Kismet/GameplayStatics.h"
 
 
