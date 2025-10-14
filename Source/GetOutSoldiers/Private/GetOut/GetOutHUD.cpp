@@ -8,22 +8,5 @@
 
 void AGetOutHUD::InitHUD(AGoSPlayerController* InDriverPlayerController, ANoInputPlayerController* InNoInputPlayerController)
 {
-	if (AGetOutPlayerController* GetOutPlayerController = Cast<AGetOutPlayerController>(PlayerOwner))
-	{
-		GetOutPlayerController->OnMenuInputActionPressed.AddDynamic(this, &AGetOutHUD::OnMenuInputActionPressed);
-	}
-
 	Super::InitHUD(InDriverPlayerController, InNoInputPlayerController);
-}
-
-void AGetOutHUD::OnMenuInputActionPressed(EMenuAction MenuAction)
-{
-	//Call BP Event
-	ReceiveOnMenuInputActionPressed(MenuAction);
-
-	//Pass Action to CurrentInteractionWidget;
-	if (CurrentInteractionWidget != nullptr)
-	{
-		CurrentInteractionWidget->HandleMenuAction(MenuAction);
-	}	
 }
