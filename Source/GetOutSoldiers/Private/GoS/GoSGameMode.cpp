@@ -60,7 +60,7 @@ void AGoSGameMode::CreateLocalPlayers()
 			return;
 		}
 	}
-	
+ 	
 	m_NounoursPlayerController = GetWorld()->SpawnActor<ANoInputPlayerController>();
 	PlayerNounours->PlayerController = m_NounoursPlayerController;
 	m_NounoursPlayerController->Player = PlayerNounours;
