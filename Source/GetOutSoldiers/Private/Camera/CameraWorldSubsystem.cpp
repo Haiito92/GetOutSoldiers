@@ -19,7 +19,8 @@ void UCameraWorldSubsystem::InitializeCameraWorldSubsystem(APlayerController* Us
 	CameraSpawnParameters.Name = FName("MainCamera");
 	m_MainCamera = World->SpawnActor<ACameraActor>(ACameraActor::StaticClass(), CameraSpawnParameters);
 	m_MainCamera->GetCameraComponent()->bConstrainAspectRatio = false;
-	UsedPlayerController->SetViewTarget(m_MainCamera);
+
+	m_TargetPlayerController = UsedPlayerController;
 
 	TActorRange<AView> Views = TActorRange<AView>(World);
 	for (AView* View : Views)
@@ -60,6 +61,8 @@ void UCameraWorldSubsystem::StartCameraWorldSubsystem()
 
 	m_CameraController->Start();
 	m_ViewVolumeBlender->Start();
+
+	m_TargetPlayerController->SetViewTarget(m_MainCamera);
 }
 
 void UCameraWorldSubsystem::UpdateCameraWorldSubsystem(float DeltaTime)
