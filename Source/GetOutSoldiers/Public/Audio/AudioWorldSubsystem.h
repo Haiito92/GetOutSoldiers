@@ -6,6 +6,7 @@
 #include "Subsystems/GameInstanceSubsystem.h"
 #include "AudioWorldSubsystem.generated.h"
 
+class UAudioGameInstanceSubsystem;
 enum class EVolumeType : uint8;
 class USoundMix;
 class USoundClass;
@@ -32,9 +33,9 @@ public:
 
 private:
 	UPROPERTY()
+	TObjectPtr<UAudioGameInstanceSubsystem> m_AudioGameInstanceSubsystem;
+	UPROPERTY()
 	TObjectPtr<USoundMix> m_MainSoundMix;
 	UPROPERTY()
 	TMap<EVolumeType, TObjectPtr<USoundClass>> m_SoundClasses;
-	UPROPERTY()
-	TMap<EVolumeType, float> m_Volumes;
 };

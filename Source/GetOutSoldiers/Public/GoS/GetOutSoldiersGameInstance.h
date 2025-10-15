@@ -16,4 +16,5 @@ class GETOUTSOLDIERS_API UGetOutSoldiersGameInstance : public UGameInstance
 
 	virtual void Init() override;
 	virtual void OnStart() override;
+	virtual void Shutdown() override;
 };

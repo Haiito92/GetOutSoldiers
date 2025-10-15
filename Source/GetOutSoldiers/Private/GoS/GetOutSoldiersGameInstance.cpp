@@ -3,6 +3,7 @@
 
 #include "GoS/GetOutSoldiersGameInstance.h"
 
+#include "Audio/AudioGameInstanceSubsystem.h"
 #include "Audio/AudioWorldSubsystem.h"
 #include "GameFramework/GameUserSettings.h"
 
@@ -18,9 +19,23 @@ void UGetOutSoldiersGameInstance::Init()
 		Settings->ApplySettings(true);
 	}
 
+	if (UAudioGameInstanceSubsystem* AudioGameInstanceSubsystem = GetSubsystem<UAudioGameInstanceSubsystem>())
+	{
+		AudioGameInstanceSubsystem->InitializeAudioGameInstanceSubsystem();
+	}
 }
 
 void UGetOutSoldiersGameInstance::OnStart()
 {
 	Super::OnStart();
+}
+
+void UGetOutSoldiersGameInstance::Shutdown()
+{
+	Super::Shutdown();
+
+	if (UAudioGameInstanceSubsystem* AudioGameInstanceSubsystem = GetSubsystem<UAudioGameInstanceSubsystem>())
+	{
+		AudioGameInstanceSubsystem->SaveVolumes();
+	}
 }
