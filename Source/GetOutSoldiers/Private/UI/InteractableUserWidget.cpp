@@ -14,6 +14,10 @@ bool UInteractableUserWidget::HandleMenuAction(EMenuAction Action)
 
 void UInteractableUserWidget::OnWidgetFocusChanged(bool bIsFocused)
 {
+	if (InnerFocusableWidgets.Num() > currentInnerFocusIndex)
+	{
+		InnerFocusableWidgets[currentInnerFocusIndex]->OnWidgetFocusChanged(bIsFocused);
+	}
 	ReceiveOnWidgetFocusChanged(bIsFocused);
 }
 
@@ -23,8 +27,15 @@ void UInteractableUserWidget::ChangeInnerFocusedWidget(bool bIncrement)
 	{
 		InnerFocusableWidgets[currentInnerFocusIndex]->OnWidgetFocusChanged(false);
 		currentInnerFocusIndex += bIncrement? 1 : -1;
-		if (currentInnerFocusIndex < 0) currentInnerFocusIndex = InnerFocusableWidgets.Num() - 1;
-		if (currentInnerFocusIndex >= InnerFocusableWidgets.Num()) currentInnerFocusIndex = 0;
+		if (bLoopOnChangeIndex)
+		{
+			if (currentInnerFocusIndex < 0) currentInnerFocusIndex = InnerFocusableWidgets.Num() - 1;
+			if (currentInnerFocusIndex >= InnerFocusableWidgets.Num()) currentInnerFocusIndex = 0;
+		}
+		else
+		{
+			currentInnerFocusIndex = FMath::Clamp(currentInnerFocusIndex, 0, InnerFocusableWidgets.Num() - 1);
+		}
 		InnerFocusableWidgets[currentInnerFocusIndex]->OnWidgetFocusChanged(true);
 	}
 }

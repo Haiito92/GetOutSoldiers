@@ -13,6 +13,10 @@ void AGoSHUD::InitHUD(AGoSPlayerController* InDriverPlayerController, ANoInputPl
 	if (InDriverPlayerController != nullptr)
 	{
 		InDriverPlayerController->OnMenuInputActionPressed.AddDynamic(this, &AGoSHUD::OnMenuInputActionPressed);
+		if (CurrentInteractionWidget != nullptr)
+		{
+			CurrentInteractionWidget->OnWidgetFocusChanged(true);
+		}
 	}
 }
 
@@ -26,4 +30,18 @@ void AGoSHUD::OnMenuInputActionPressed(EMenuAction MenuAction)
 	{
 		CurrentInteractionWidget->HandleMenuAction(MenuAction);
 	}
+}
+
+void AGoSHUD::SetCurrentInteractionWidget(UInteractableUserWidget* InWidget)
+{
+	if (CurrentInteractionWidget != nullptr)
+	{
+		CurrentInteractionWidget->OnWidgetFocusChanged(false);
+	}
+	CurrentInteractionWidget = InWidget;
+	if (CurrentInteractionWidget != nullptr)
+	{
+		CurrentInteractionWidget->OnWidgetFocusChanged(true);
+	}
+	
 }
