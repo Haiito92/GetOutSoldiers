@@ -45,8 +45,22 @@ void AGoSGameMode::CreateLocalPlayers()
 	}
 	
 	//Setup Nounours Player
-	FString OutError;
-	ULocalPlayer* PlayerNounours = GameInstance->CreateLocalPlayer(1, OutError, false);
+
+	ULocalPlayer* PlayerNounours = GameInstance->GetLocalPlayerByIndex(1);
+	
+	if (PlayerNounours == nullptr)
+	{
+		FString OutError;
+		
+		PlayerNounours = GameInstance->CreateLocalPlayer(1, OutError, false);
+
+		if (PlayerNounours == nullptr)
+		{
+			UE_LOG(LogTemp, Error, TEXT("Couldn't create or get local player one"))
+			return;
+		}
+	}
+ 	
 	m_NounoursPlayerController = GetWorld()->SpawnActor<ANoInputPlayerController>();
 	PlayerNounours->PlayerController = m_NounoursPlayerController;
 	m_NounoursPlayerController->Player = PlayerNounours;

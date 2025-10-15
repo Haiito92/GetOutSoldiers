@@ -5,7 +5,7 @@
 
 bool UInteractableUserWidget::HandleMenuAction(EMenuAction Action)
 {
-	if (InnerFocusableWidgets.Num() > 0)
+	if (InnerFocusableWidgets.Num() > currentInnerFocusIndex)
 	{
 		if (InnerFocusableWidgets[currentInnerFocusIndex]->HandleMenuAction(Action)) return true;
 	}
@@ -25,7 +25,6 @@ void UInteractableUserWidget::ChangeInnerFocusedWidget(bool bIncrement)
 		currentInnerFocusIndex += bIncrement? 1 : -1;
 		if (currentInnerFocusIndex < 0) currentInnerFocusIndex = InnerFocusableWidgets.Num() - 1;
 		if (currentInnerFocusIndex >= InnerFocusableWidgets.Num()) currentInnerFocusIndex = 0;
-		InnerFocusableWidgets[currentInnerFocusIndex]->SetFocus();
 		InnerFocusableWidgets[currentInnerFocusIndex]->OnWidgetFocusChanged(true);
 	}
 }
