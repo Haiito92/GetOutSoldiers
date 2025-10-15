@@ -30,7 +30,6 @@ protected:
 	
 	virtual void CreateLocalPlayers();
 	virtual void CreatePawns();
-
 	virtual void CreateHUD();
 
 protected:

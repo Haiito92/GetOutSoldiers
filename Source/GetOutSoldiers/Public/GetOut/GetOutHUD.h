@@ -21,15 +21,4 @@ class GETOUTSOLDIERS_API AGetOutHUD : public AGoSHUD
 public:
 	//Cpp function of InitHUD;
 	virtual void InitHUD(AGoSPlayerController* InDriverPlayerController, ANoInputPlayerController* InNoInputPlayerController) override;
-
-	UFUNCTION()
-	//Distribute Input to BP Class and Current Active Menu Widget
-	void OnMenuInputActionPressed(EMenuAction MenuAction);
-
-protected:
-	UFUNCTION(BlueprintImplementableEvent)
-	void ReceiveOnMenuInputActionPressed(EMenuAction MenuAction);
-	
-	UPROPERTY(BlueprintReadWrite)
-	TObjectPtr<UInteractableUserWidget> CurrentInteractionWidget;
 };
