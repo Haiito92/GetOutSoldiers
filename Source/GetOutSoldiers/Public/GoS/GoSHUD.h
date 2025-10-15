@@ -25,10 +25,14 @@ public:
 	//Distribute Input to BP Class and Current Active Menu Widget
 	void OnMenuInputActionPressed(EMenuAction MenuAction);
 
+	UFUNCTION(BlueprintCallable)
+	void SetCurrentInteractionWidget(UInteractableUserWidget* InWidget);
+
 protected:
 	UFUNCTION(BlueprintImplementableEvent)
 	void ReceiveOnMenuInputActionPressed(EMenuAction MenuAction);
-	
-	UPROPERTY(BlueprintReadWrite)
+
+private:
+	UPROPERTY()
 	TObjectPtr<UInteractableUserWidget> CurrentInteractionWidget;
 };
