@@ -19,8 +19,12 @@ class GETOUTSOLDIERS_API UAudioWorldSubsystem : public UWorldSubsystem
 	GENERATED_BODY()
 
 public:
+	UFUNCTION()
 	void InitializeAudioSubsystem();
 	void StartAudioSubsystem() const;
+
+	UFUNCTION()
+	void OnVolumesLoaded();
 
 	UFUNCTION(BlueprintCallable)
 	float GetVolume(EVolumeType VolumeType) const;
