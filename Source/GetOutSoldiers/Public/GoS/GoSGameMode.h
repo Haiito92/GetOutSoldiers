@@ -25,7 +25,9 @@ protected:
 	void ReceiveInitializeGame();
 	UFUNCTION(BlueprintCallable, Category="Gameloop")
 	void InitializeGame();
-
+	UFUNCTION()
+	virtual void InitializeWorldSubsystems();
+	
 	virtual void FindGameModeSettings();
 	
 	virtual void CreateLocalPlayers();
