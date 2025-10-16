@@ -31,4 +31,8 @@ public:
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMenuInputActionPressed, EMenuAction, MenuAction);
 	UPROPERTY(BlueprintCallable)
 	FOnMenuInputActionPressed OnMenuInputActionPressed;
+	
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMenuInputActionReleased, EMenuAction, MenuAction);
+	UPROPERTY(BlueprintCallable)
+	FOnMenuInputActionReleased OnMenuInputActionReleased;
 };

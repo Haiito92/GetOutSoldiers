@@ -12,6 +12,15 @@ bool UInteractableUserWidget::HandleMenuAction(EMenuAction Action)
 	return ReceiveHandleMenuAction(Action);
 }
 
+bool UInteractableUserWidget::HandleMenuActionReleased(EMenuAction Action)
+{
+	if (InnerFocusableWidgets.Num() > currentInnerFocusIndex)
+	{
+		if (InnerFocusableWidgets[currentInnerFocusIndex]->HandleMenuActionReleased(Action)) return true;
+	}
+	return ReceiveHandleMenuActionReleased(Action);
+}
+
 void UInteractableUserWidget::OnWidgetFocusChanged(bool bIsFocused)
 {
 	if (InnerFocusableWidgets.Num() > currentInnerFocusIndex)
@@ -41,6 +50,11 @@ void UInteractableUserWidget::ChangeInnerFocusedWidget(bool bIncrement)
 }
 
 bool UInteractableUserWidget::ReceiveHandleMenuAction_Implementation(EMenuAction Action)
+{
+	return false;
+}
+
+bool UInteractableUserWidget::ReceiveHandleMenuActionReleased_Implementation(EMenuAction Action)
 {
 	return false;
 }
