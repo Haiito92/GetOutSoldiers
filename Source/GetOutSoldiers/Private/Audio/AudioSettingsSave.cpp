@@ -13,10 +13,5 @@ UAudioSettingsSave::UAudioSettingsSave(const TMap<EVolumeType, float>& InVolumes
 	SetVolumes(InVolumes);
 }
 
-void UAudioSettingsSave::SetVolumes(const TMap<EVolumeType, float>& InVolumes)
-{
-	m_Volumes = InVolumes;
-}
-
 const FString UAudioSettingsSave::SaveSlotName = TEXT("AudioSettingsSave");
 const int UAudioSettingsSave::UserIndex = 0;

@@ -70,5 +70,7 @@ void UAudioGameInstanceSubsystem::OnAudioSettingsLoaded(const FString& String, i
 				m_Volumes[Pair.Key] = Pair.Value;
 			}
 		}
+
 	}
+	VolumesLoaded.Broadcast();
 }
