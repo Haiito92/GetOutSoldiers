@@ -6,6 +6,7 @@
 #include "Audio/AudioGameInstanceSubsystem.h"
 #include "Audio/AudioWorldSubsystem.h"
 #include "GameFramework/GameUserSettings.h"
+#include "Score/HighScoreGameInstanceSubsystem.h"
 
 void UGetOutSoldiersGameInstance::Init()
 {
@@ -22,6 +23,11 @@ void UGetOutSoldiersGameInstance::Init()
 	if (UAudioGameInstanceSubsystem* AudioGameInstanceSubsystem = GetSubsystem<UAudioGameInstanceSubsystem>())
 	{
 		AudioGameInstanceSubsystem->InitializeAudioGameInstanceSubsystem();
+	}
+
+	if (UHighScoreGameInstanceSubsystem* HighScoreGameInstanceSubsystem = GetSubsystem<UHighScoreGameInstanceSubsystem>())
+	{
+		HighScoreGameInstanceSubsystem->InitializeHighScoreGameInstanceSubsystem();
 	}
 }
 

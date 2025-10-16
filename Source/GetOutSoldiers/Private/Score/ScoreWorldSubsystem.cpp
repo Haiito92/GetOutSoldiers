@@ -5,6 +5,7 @@
 
 #include "MathUtil.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Score/HighScoreGameInstanceSubsystem.h"
 
 void UScoreWorldSubsystem::InitializeScoreWorldSubsystem()
 {
@@ -30,6 +31,7 @@ void UScoreWorldSubsystem::UnpauseScoreWorldSubsystem()
 void UScoreWorldSubsystem::EndScoreWorldSubsystem()
 {
 	m_IsScoreSystemActive = false;
+	UpdateFormattedTimer();
 	SaveScore();
 }
 
@@ -42,7 +44,9 @@ void UScoreWorldSubsystem::ResetScoreWorldSubsystem()
 
 void UScoreWorldSubsystem::SaveScore() const
 {
-	//Send score to score table to score game instance subsystem
+	UHighScoreGameInstanceSubsystem* HighScoreGameInstanceSubsystem = GetWorld()->GetGameInstance()->GetSubsystem<UHighScoreGameInstanceSubsystem>();
+	if (HighScoreGameInstanceSubsystem == nullptr) return;
+	HighScoreGameInstanceSubsystem->AddHighScore(m_ScoreTimer, m_FormattedTimer);
 }
 
 void UScoreWorldSubsystem::Tick(float DeltaTime)
