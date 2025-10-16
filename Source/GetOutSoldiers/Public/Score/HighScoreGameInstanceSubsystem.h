@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameFramework/SaveGame.h"
 #include "Subsystems/GameInstanceSubsystem.h"
 #include "HighScoreGameInstanceSubsystem.generated.h"
 
@@ -41,7 +42,12 @@ public:
 	
 	void AddHighScore(const float& Time, const FString& FormattedTime);
 	void AddHighScore(const FHighScoreStruct& InHighScoreStruct);
-
+	
+	void SaveHighScores() const;
+private:
+	void LoadHighScores();
+	void OnHighScoresLoaded(const FString& String, int I, USaveGame* SaveGame);
+	
 protected:
 	UPROPERTY(BlueprintReadOnly, DisplayName="HighScores")
 	TArray<FHighScoreStruct> m_HighScores;

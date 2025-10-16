@@ -38,10 +38,15 @@ void UGetOutSoldiersGameInstance::OnStart()
 
 void UGetOutSoldiersGameInstance::Shutdown()
 {
-	Super::Shutdown();
-
 	if (UAudioGameInstanceSubsystem* AudioGameInstanceSubsystem = GetSubsystem<UAudioGameInstanceSubsystem>())
 	{
 		AudioGameInstanceSubsystem->SaveVolumes();
 	}
+
+	if (UHighScoreGameInstanceSubsystem* HighScoreGameInstanceSubsystem = GetSubsystem<UHighScoreGameInstanceSubsystem>())
+	{
+		HighScoreGameInstanceSubsystem->SaveHighScores();
+	}
+	
+	Super::Shutdown();
 }
