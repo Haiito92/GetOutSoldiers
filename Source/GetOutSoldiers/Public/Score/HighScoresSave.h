@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/SaveGame.h"
+#include "Score/HighScoreGameInstanceSubsystem.h"
 #include "HighScoresSave.generated.h"
 
 struct FHighScoreStruct;

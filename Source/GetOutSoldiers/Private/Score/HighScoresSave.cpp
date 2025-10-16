@@ -3,5 +3,5 @@
 
 #include "Score/HighScoresSave.h"
 
-const FString UHighScoresSave::SaveSlotName = TEXT("GoSAudioSettingsSave");
+const FString UHighScoresSave::SaveSlotName = TEXT("HighScoresSave");
 const int UHighScoresSave::UserIndex = 0;

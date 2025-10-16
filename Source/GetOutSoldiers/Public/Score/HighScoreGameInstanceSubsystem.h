@@ -47,7 +47,8 @@ public:
 private:
 	void LoadHighScores();
 	void OnHighScoresLoaded(const FString& String, int I, USaveGame* SaveGame);
-	
+
+	void SortHighScores();
 protected:
 	UPROPERTY(BlueprintReadOnly, DisplayName="HighScores")
 	TArray<FHighScoreStruct> m_HighScores;
