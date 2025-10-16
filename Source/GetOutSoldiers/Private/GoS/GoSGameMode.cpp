@@ -3,6 +3,8 @@
 
 #include "GoS/GoSGameMode.h"
 
+#include "Audio/AudioSubsystemSettings.h"
+#include "Audio/AudioWorldSubsystem.h"
 #include "GetOut/GetOutPlayerController.h"
 #include "GetOut/NoInputPlayerController.h"
 #include "GoS/GoSGameModeSettings.h"
@@ -19,11 +21,23 @@ void AGoSGameMode::InitializeGame()
 {
 	FindGameModeSettings();
 	
+	InitializeWorldSubsystems();
+	
 	CreateLocalPlayers();
 	CreatePawns();
 	CreateHUD();
 	
 	ReceiveInitializeGame();
+}
+
+void AGoSGameMode::InitializeWorldSubsystems()
+{
+	UAudioWorldSubsystem* AudioWorldSubsystem =GetWorld()->GetSubsystem<UAudioWorldSubsystem>();
+	if (AudioWorldSubsystem != nullptr)
+	{
+		AudioWorldSubsystem->InitializeAudioSubsystem();
+		AudioWorldSubsystem->StartAudioSubsystem();
+	}
 }
 
 void AGoSGameMode::FindGameModeSettings()

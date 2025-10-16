@@ -2,7 +2,11 @@
 
 
 #include "GoS/GetOutSoldiersGameInstance.h"
+
+#include "Audio/AudioGameInstanceSubsystem.h"
+#include "Audio/AudioWorldSubsystem.h"
 #include "GameFramework/GameUserSettings.h"
+#include "Score/HighScoreGameInstanceSubsystem.h"
 
 void UGetOutSoldiersGameInstance::Init()
 {
@@ -14,6 +18,35 @@ void UGetOutSoldiersGameInstance::Init()
 	{
 		Settings->SetFullscreenMode(EWindowMode::Windowed);
 		Settings->ApplySettings(true);
-	
 	}
+
+	if (UAudioGameInstanceSubsystem* AudioGameInstanceSubsystem = GetSubsystem<UAudioGameInstanceSubsystem>())
+	{
+		AudioGameInstanceSubsystem->InitializeAudioGameInstanceSubsystem();
+	}
+
+	if (UHighScoreGameInstanceSubsystem* HighScoreGameInstanceSubsystem = GetSubsystem<UHighScoreGameInstanceSubsystem>())
+	{
+		HighScoreGameInstanceSubsystem->InitializeHighScoreGameInstanceSubsystem();
+	}
+}
+
+void UGetOutSoldiersGameInstance::OnStart()
+{
+	Super::OnStart();
+}
+
+void UGetOutSoldiersGameInstance::Shutdown()
+{
+	if (UAudioGameInstanceSubsystem* AudioGameInstanceSubsystem = GetSubsystem<UAudioGameInstanceSubsystem>())
+	{
+		AudioGameInstanceSubsystem->SaveVolumes();
+	}
+
+	if (UHighScoreGameInstanceSubsystem* HighScoreGameInstanceSubsystem = GetSubsystem<UHighScoreGameInstanceSubsystem>())
+	{
+		HighScoreGameInstanceSubsystem->SaveHighScores();
+	}
+	
+	Super::Shutdown();
 }
