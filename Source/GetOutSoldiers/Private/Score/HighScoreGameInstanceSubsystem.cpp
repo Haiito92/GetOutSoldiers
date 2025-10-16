@@ -41,17 +41,8 @@ void UHighScoreGameInstanceSubsystem::AddHighScore(const float& InTime, const FS
 void UHighScoreGameInstanceSubsystem::AddHighScore(const FHighScoreStruct& InHighScoreStruct)
 {
 	m_HighScores.Add(InHighScoreStruct);
-	m_HighScores.Sort([](const FHighScoreStruct& A, const FHighScoreStruct& B)
-	{
-		if (A.Time > B.Time) return false;
-		return true;
-	});
-
-	while (m_HighScores.Num() > m_MaxShownHighScores)
-	{
-		
-		m_HighScores.RemoveAt(m_HighScores.Num() - 1);
-	}
+	
+	SortHighScores();
 	
 	HighScoresChanged.Broadcast();
 }
@@ -82,18 +73,23 @@ void UHighScoreGameInstanceSubsystem::OnHighScoresLoaded(const FString& String, 
 	{
 		m_HighScores = SettingsSave->GetSavedHighScores();
 
-		m_HighScores.Sort([](const FHighScoreStruct& A, const FHighScoreStruct& B)
+		SortHighScores();
+	
+		HighScoresChanged.Broadcast();
+	}
+}
+
+void UHighScoreGameInstanceSubsystem::SortHighScores()
+{
+	m_HighScores.Sort([](const FHighScoreStruct& A, const FHighScoreStruct& B)
 		{
 			if (A.Time > B.Time) return false;
 			return true;
 		});
 
-		while (m_HighScores.Num() > m_MaxShownHighScores)
-		{
+	while (m_HighScores.Num() >= m_MaxShownHighScores)
+	{
 		
-			m_HighScores.RemoveAt(m_HighScores.Num() - 1);
-		}
-	
-		HighScoresChanged.Broadcast();
+		m_HighScores.RemoveAt(m_HighScores.Num() - 1);
 	}
 }
