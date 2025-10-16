@@ -7,6 +7,7 @@
 #include "GoS/GoSGameMode.h"
 #include "GetOutGameMode.generated.h"
 
+class UScoreWorldSubsystem;
 class AGetOutHUD;
 
 /**
@@ -20,6 +21,7 @@ class GETOUTSOLDIERS_API AGetOutGameMode : public AGoSGameMode
 	
 protected:
 	
+	virtual void InitializeWorldSubsystems() override;
 	
 	UFUNCTION(BlueprintImplementableEvent, Category="Gameloop")
 	void ReceiveStartGame();
@@ -57,6 +59,9 @@ private:
 	virtual void CreatePawns() override;
 	
 protected:
+	UPROPERTY()
+	TObjectPtr<UScoreWorldSubsystem> m_ScoreWorldSubsystem;
+	
 	UPROPERTY(BlueprintReadWrite, Category="Players|Pawns", DisplayName="DriverPawn")
 	TObjectPtr<APawn> m_DriverPawn;
 };
