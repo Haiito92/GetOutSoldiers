@@ -6,6 +6,7 @@
 #include "Audio/AudioGameInstanceSubsystem.h"
 #include "Audio/AudioWorldSubsystem.h"
 #include "GameFramework/GameUserSettings.h"
+#include "LevelLoading/LevelLoadingGameInstanceSubsystem.h"
 #include "Score/HighScoreGameInstanceSubsystem.h"
 
 void UGetOutSoldiersGameInstance::Init()
@@ -20,6 +21,11 @@ void UGetOutSoldiersGameInstance::Init()
 		Settings->ApplySettings(true);
 	}
 
+	if (ULevelLoadingGameInstanceSubsystem* LevelLoadingGameInstanceSubsystem = GetSubsystem<ULevelLoadingGameInstanceSubsystem>())
+	{
+		LevelLoadingGameInstanceSubsystem->InitializeLevelLoadingGameInstanceSubsystem();
+	}
+	
 	if (UAudioGameInstanceSubsystem* AudioGameInstanceSubsystem = GetSubsystem<UAudioGameInstanceSubsystem>())
 	{
 		AudioGameInstanceSubsystem->InitializeAudioGameInstanceSubsystem();
