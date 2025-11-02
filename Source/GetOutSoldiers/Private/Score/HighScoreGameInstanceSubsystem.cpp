@@ -4,6 +4,8 @@
 #include "Score/HighScoreGameInstanceSubsystem.h"
 
 #include "Kismet/GameplayStatics.h"
+#include "LevelLoading/LevelLoadingGameInstanceSubsystem.h"
+#include "LevelLoading/LevelLoadingSubsystemSettings.h"
 #include "Score/HighScoresSave.h"
 #include "Score/HighScoreSubsystemSettings.h"
 
@@ -23,8 +25,33 @@ FHighScoreStruct::~FHighScoreStruct()
 {
 }
 
+FLevelHighScoresStruct::FLevelHighScoresStruct():
+LevelDisplayName(FText()),
+HighScores(TArray<FHighScoreStruct>())
+{
+}
+
+FLevelHighScoresStruct::FLevelHighScoresStruct(const FText& InLevelName):
+LevelDisplayName(InLevelName),
+HighScores(TArray<FHighScoreStruct>())
+{
+}
+
+FLevelHighScoresStruct::~FLevelHighScoresStruct()
+{
+}
+
 void UHighScoreGameInstanceSubsystem::InitializeHighScoreGameInstanceSubsystem()
 {
+	const ULevelLoadingGameInstanceSubsystem* LevelSubsystem = GetGameInstance()->GetSubsystem<ULevelLoadingGameInstanceSubsystem>();
+	if (LevelSubsystem == nullptr) return;
+
+	const TArray<FLevelDataStruct> getOutLevelData = LevelSubsystem->GetGetOutLevelDatas();
+	for (FLevelDataStruct LevelData : getOutLevelData)
+	{
+		m_LevelHighScores.Add(LevelData.LevelName, FLevelHighScoresStruct(LevelData.DisplayName));
+	}
+	
 	const UHighScoreSubsystemSettings* Settings = GetDefault<UHighScoreSubsystemSettings>();
 	if (Settings == nullptr) return;
 
@@ -33,16 +60,18 @@ void UHighScoreGameInstanceSubsystem::InitializeHighScoreGameInstanceSubsystem()
 	LoadHighScores();
 }
 
-void UHighScoreGameInstanceSubsystem::AddHighScore(const float& InTime, const FString& InFormattedTime)
+void UHighScoreGameInstanceSubsystem::AddHighScore(const FName& LevelName, const float& InTime, const FString& InFormattedTime)
 {
-	AddHighScore(FHighScoreStruct(InTime, InFormattedTime));
+	AddHighScore(LevelName, FHighScoreStruct(InTime, InFormattedTime));
 }
 
-void UHighScoreGameInstanceSubsystem::AddHighScore(const FHighScoreStruct& InHighScoreStruct)
+void UHighScoreGameInstanceSubsystem::AddHighScore(const FName& LevelName, const FHighScoreStruct& InHighScoreStruct)
 {
-	m_HighScores.Add(InHighScoreStruct);
+	if(!m_LevelHighScores.Contains(LevelName)) return;
+
+	m_LevelHighScores[LevelName].HighScores.Add(InHighScoreStruct);
 	
-	SortHighScores();
+	SortHighScores(m_LevelHighScores[LevelName].HighScores);
 	
 	HighScoresChanged.Broadcast();
 }
@@ -51,7 +80,7 @@ void UHighScoreGameInstanceSubsystem::SaveHighScores() const
 {
 	if (UHighScoresSave* SettingsSave = Cast<UHighScoresSave>(UGameplayStatics::CreateSaveGameObject(UHighScoresSave::StaticClass())))
 	{
-		SettingsSave->SetSavedHighScores(m_HighScores);
+		SettingsSave->SetSavedHighScores(m_LevelHighScores);
 
 		UGameplayStatics::AsyncSaveGameToSlot(SettingsSave, UHighScoresSave::SaveSlotName, UHighScoresSave::UserIndex);
 	}
@@ -71,25 +100,31 @@ void UHighScoreGameInstanceSubsystem::OnHighScoresLoaded(const FString& String, 
 {
 	if (UHighScoresSave* SettingsSave = Cast<UHighScoresSave>(SaveGame))
 	{
-		m_HighScores = SettingsSave->GetSavedHighScores();
+		TMap<FName, FLevelHighScoresStruct> SavedHighScores = SettingsSave->GetSavedHighScores();
 
-		SortHighScores();
-	
+		for (TPair<FName, FLevelHighScoresStruct> SavedHighScore : SavedHighScores)
+		{
+			if (m_LevelHighScores.Contains(SavedHighScore.Key))
+			{
+				m_LevelHighScores[SavedHighScore.Key] = SavedHighScore.Value;
+			}
+		}
+		
 		HighScoresChanged.Broadcast();
 	}
 }
 
-void UHighScoreGameInstanceSubsystem::SortHighScores()
+void UHighScoreGameInstanceSubsystem::SortHighScores(TArray<FHighScoreStruct>& HighScores)
 {
-	m_HighScores.Sort([](const FHighScoreStruct& A, const FHighScoreStruct& B)
+	HighScores.Sort([](const FHighScoreStruct& A, const FHighScoreStruct& B)
 		{
 			if (A.Time > B.Time) return false;
 			return true;
 		});
 
-	while (m_HighScores.Num() >= m_MaxShownHighScores)
+	while (HighScores.Num() >= m_MaxShownHighScores)
 	{
 		
-		m_HighScores.RemoveAt(m_HighScores.Num() - 1);
+		HighScores.RemoveAt(HighScores.Num() - 1);
 	}
 }

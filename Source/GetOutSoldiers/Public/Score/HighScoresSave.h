@@ -17,12 +17,12 @@ class GETOUTSOLDIERS_API UHighScoresSave : public USaveGame
 	GENERATED_BODY()
 
 public:
-	inline const TArray<FHighScoreStruct>& GetSavedHighScores() const { return m_SavedHighScores; }
-	inline void SetSavedHighScores(const TArray<FHighScoreStruct>& InHighScores) { m_SavedHighScores = InHighScores; }
+	inline const TMap<FName, FLevelHighScoresStruct>& GetSavedHighScores() const { return m_SavedHighScores; }
+	inline void SetSavedHighScores(const TMap<FName, FLevelHighScoresStruct>& InHighScores) { m_SavedHighScores = InHighScores; }
 	
 	static const FString SaveSlotName;
 	static const int UserIndex;
 private:
 	UPROPERTY();
-	TArray<FHighScoreStruct> m_SavedHighScores;
+	TMap<FName, FLevelHighScoresStruct> m_SavedHighScores;
 };

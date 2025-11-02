@@ -28,6 +28,21 @@ public:
 	FString FormattedTime;
 };
 
+USTRUCT(Blueprintable)
+struct FLevelHighScoresStruct
+{
+	GENERATED_BODY()
+public:
+	FLevelHighScoresStruct();
+	FLevelHighScoresStruct(const FText& InLevelDisplayName);
+	~FLevelHighScoresStruct();
+
+	UPROPERTY(BlueprintReadWrite)
+	FText LevelDisplayName;
+	UPROPERTY(BlueprintReadWrite)
+	TArray<FHighScoreStruct> HighScores;
+};
+
 UCLASS()
 class GETOUTSOLDIERS_API UHighScoreGameInstanceSubsystem : public UGameInstanceSubsystem
 {
@@ -40,18 +55,18 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FHighScoresChangedSignature HighScoresChanged;
 	
-	void AddHighScore(const float& Time, const FString& FormattedTime);
-	void AddHighScore(const FHighScoreStruct& InHighScoreStruct);
+	void AddHighScore(const FName& LevelName, const float& Time, const FString& FormattedTime);
+	void AddHighScore(const FName& LevelName, const FHighScoreStruct& InHighScoreStruct);
 	
 	void SaveHighScores() const;
 private:
 	void LoadHighScores();
 	void OnHighScoresLoaded(const FString& String, int I, USaveGame* SaveGame);
 
-	void SortHighScores();
+	void SortHighScores(TArray<FHighScoreStruct>& HighScores);
 protected:
 	UPROPERTY(BlueprintReadOnly, DisplayName="HighScores")
-	TArray<FHighScoreStruct> m_HighScores;
+	TMap<FName, FLevelHighScoresStruct> m_LevelHighScores;
 	
 private:
 	UPROPERTY()

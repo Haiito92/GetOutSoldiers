@@ -5,6 +5,8 @@
 
 #include "MathUtil.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "LevelLoading/LevelLoadingGameInstanceSubsystem.h"
+#include "LevelLoading/LevelLoadingSubsystemSettings.h"
 #include "Score/HighScoreGameInstanceSubsystem.h"
 
 void UScoreWorldSubsystem::InitializeScoreWorldSubsystem()
@@ -46,7 +48,15 @@ void UScoreWorldSubsystem::SaveScore() const
 {
 	UHighScoreGameInstanceSubsystem* HighScoreGameInstanceSubsystem = GetWorld()->GetGameInstance()->GetSubsystem<UHighScoreGameInstanceSubsystem>();
 	if (HighScoreGameInstanceSubsystem == nullptr) return;
-	HighScoreGameInstanceSubsystem->AddHighScore(m_ScoreTimer, m_FormattedTimer);
+
+	ULevelLoadingGameInstanceSubsystem*  LevelLoadingGameInstanceSubsystem = GetWorld()->GetGameInstance()->GetSubsystem<ULevelLoadingGameInstanceSubsystem>();
+	if (LevelLoadingGameInstanceSubsystem == nullptr) return;
+	
+	
+	HighScoreGameInstanceSubsystem->AddHighScore(
+		LevelLoadingGameInstanceSubsystem->GetCurrentGetOutLevelData().LevelName,
+		m_ScoreTimer,
+		m_FormattedTimer);
 }
 
 void UScoreWorldSubsystem::Tick(float DeltaTime)

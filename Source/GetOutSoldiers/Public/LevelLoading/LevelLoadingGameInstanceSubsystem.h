@@ -74,6 +74,10 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void ReloadCurrentLevel();
+
+	const FLevelDataStruct& GetCurrentGetOutLevelData() const {return m_CurrentGetOutLevel; }
+	
+	const TArray<FLevelDataStruct>& GetGetOutLevelDatas() const { return m_GetOutLevels; }
 protected:
 	UFUNCTION(BlueprintCallable)
 	void OpenGetOutLevel(const FLevelDataStruct& GetOutLevelData);
