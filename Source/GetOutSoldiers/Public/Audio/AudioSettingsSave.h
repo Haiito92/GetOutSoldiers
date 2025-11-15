@@ -20,7 +20,7 @@ public:
 	UAudioSettingsSave(const TMap<EVolumeType, float>& InVolumes);
 
 	inline TMap<EVolumeType, float> GetVolumes() const { return m_Volumes; }
-	void SetVolumes(const TMap<EVolumeType, float>& InVolumes);
+	inline void SetVolumes(const TMap<EVolumeType, float>& InVolumes) { m_Volumes = InVolumes; }
 
 	static const FString SaveSlotName;
 	static const int UserIndex;

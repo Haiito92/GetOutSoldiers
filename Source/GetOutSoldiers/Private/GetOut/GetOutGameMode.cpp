@@ -7,31 +7,46 @@
 #include "GetOut/GetOutGameModeSettings.h"
 #include "GetOut/GetOutPlayerController.h"
 #include "Kismet/GameplayStatics.h"
+#include "Score/ScoreWorldSubsystem.h"
 
 
+void AGetOutGameMode::InitializeWorldSubsystems()
+{
+	Super::InitializeWorldSubsystems();
+
+	m_ScoreWorldSubsystem = GetWorld()->GetSubsystem<UScoreWorldSubsystem>();
+	if (m_ScoreWorldSubsystem == nullptr) return;
+
+	m_ScoreWorldSubsystem->InitializeScoreWorldSubsystem();
+}
 
 void AGetOutGameMode::StartGame()
 {
 	ReceiveStartGame();
+	m_ScoreWorldSubsystem->StartScoreWorldSubsystem();
 }
 
 void AGetOutGameMode::EndGame()
 {
+	m_ScoreWorldSubsystem->EndScoreWorldSubsystem();
 	ReceiveEndGame();
 }
 
 void AGetOutGameMode::PauseGame()
 {
+	m_ScoreWorldSubsystem->PauseScoreWorldSubsystem();
 	ReceivePauseGame();
 }
 
 void AGetOutGameMode::UnpauseGame()
 {
+	m_ScoreWorldSubsystem->UnpauseScoreWorldSubsystem();
 	ReceiveUnpauseGame();
 }
 
 void AGetOutGameMode::RestartGame()
 {
+	m_ScoreWorldSubsystem->ResetScoreWorldSubsystem();
 	ReceiveRestartGame();
 }
 

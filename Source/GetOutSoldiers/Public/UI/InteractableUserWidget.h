@@ -21,15 +21,23 @@ public:
 	UFUNCTION(BlueprintCallable)
 	bool HandleMenuAction(EMenuAction Action);
 
+	//Returns true if action was Handled (if not parent will handle it)
+	UFUNCTION(BlueprintCallable)
+	bool HandleMenuActionReleased(EMenuAction Action);
+
 	//Warn Widget it is currently focused (Used to display selected button for example)
 	UFUNCTION(BlueprintCallable)
 	void OnWidgetFocusChanged(bool bIsFocused);
 
 protected:
 	UFUNCTION(BlueprintImplementableEvent)
-    void ReceiveOnWidgetFocusChanged(bool bIsFocused);UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
-	
+    void ReceiveOnWidgetFocusChanged(bool bIsFocused);
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	bool ReceiveHandleMenuAction(EMenuAction Action);
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	bool ReceiveHandleMenuActionReleased(EMenuAction Action);
 
 	UFUNCTION(BlueprintCallable)
 	void ChangeInnerFocusedWidget(bool bIncrement);

@@ -25,6 +25,10 @@ public:
 	void SaveVolumes() const;
 	void LoadVolumes();
 
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FVolumesLoadedSignature);
+	UPROPERTY(BlueprintAssignable)
+	FVolumesLoadedSignature VolumesLoaded;
+	
 private:
 	void OnAudioSettingsLoaded(const FString& String, int I, USaveGame* SaveGame);
 	

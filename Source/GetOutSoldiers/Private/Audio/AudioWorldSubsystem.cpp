@@ -38,9 +38,27 @@ void UAudioWorldSubsystem::InitializeAudioSubsystem()
 		
 		m_SoundClasses.Add(VolumeSoundClassPair.Key, SoundClass);
 	}
+
+	m_AudioGameInstanceSubsystem->VolumesLoaded.AddDynamic(this, &UAudioWorldSubsystem::OnVolumesLoaded);
 }
 
 void UAudioWorldSubsystem::StartAudioSubsystem() const
+{
+	if (m_MainSoundMix == nullptr) return;
+	UWorld* World = GetWorld();
+
+	UGameplayStatics::PushSoundMixModifier(World, m_MainSoundMix);
+
+	for (TPair<EVolumeType, TObjectPtr<USoundClass>> Pair : m_SoundClasses)
+	{
+		float Volume = m_AudioGameInstanceSubsystem->GetVolume(Pair.Key);
+		if (Volume == -1.0f) continue;
+		
+		UGameplayStatics::SetSoundMixClassOverride(World, m_MainSoundMix, Pair.Value, Volume);
+	}
+}
+
+void UAudioWorldSubsystem::OnVolumesLoaded()
 {
 	if (m_MainSoundMix == nullptr) return;
 	UWorld* World = GetWorld();
